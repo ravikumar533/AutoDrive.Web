@@ -1,0 +1,66 @@
+<!-- start: BREADCRUMB -->
+<div class="breadcrumb-wrapper">
+    <h4 class="mainTitle no-margin" translate="sidebar.nav.students.STUDENTS">Students</h4>
+
+    <div ncy-breadcrumb class="pull-right"></div>
+</div>
+<div class="container-fluid container-fullw">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="panel panel-white">
+              <div class="panel-body">
+                    <h5 class="over-title margin-bottom-15">
+                        Student List
+                    </h5>
+                  <div class=""  ng-controller="StudentCtrl">
+                      <form>
+                          <div class="row">
+                              <div class="col-md-6">
+                                  
+                              </div>
+                              <div class="col-md-6">
+                                  <fieldset>
+                                      <legend>
+                                          <span>Success and Error Messages</span>
+                                      </legend>
+                                      <div class="form-group" ng-class="{'has-error':Form.firstName.$dirty && Form.firstName.$invalid, 'has-success':Form.firstName.$valid}">
+                                            <label class="control-label"> First Name <span class="symbol required"></span> </label>
+                                            <input type="text" placeholder="Enter your First Name" class="form-control" name="firstName" ng-model="myModel.firstName" required />
+                                            <span class="error text-small block" ng-if="Form.firstName.$dirty && Form.firstName.$invalid">First Name is required</span>
+                                            <span class="success text-small" ng-if="Form.firstName.$valid">Thank You!</span>
+                                        </div>
+                                        <div class="form-group" ng-class="{'has-error':Form.lastName.$dirty && Form.lastName.$invalid, 'has-success':Form.lastName.$valid}">
+                                            <label class="control-label"> Last Name <span class="symbol required"></span> </label>
+                                            <input type="text" placeholder="Enter your Last Name" class="form-control" name="lastName" ng-model="myModel.lastName" required />
+                                            <span class="error text-small block" ng-if="Form.lastName.$dirty && Form.lastName.$invalid">Last Name is required</span>
+                                            <span class="success text-small" ng-if="Form.lastName.$valid">Wonderful!</span>
+                                        </div>
+                                         <div class="form-group" ng-class="{'has-error':Form.email.$dirty && Form.email.$invalid, 'has-success':Form.email.$valid}">
+                                            <label class="control-label"> Email <span class="symbol required"></span> </label>
+                                            <input type="email" placeholder="Enter a valid E-mail" class="form-control" name="email" ng-model="myModel.email" required>
+                                            <span class="error text-small block" ng-if="Form.email.$dirty && Form.email.$error.required">Email is required.</span>
+                                            <span class="error text-small block" ng-if="Form.email.$error.email">Please, enter a valid email address.</span>
+                                            <span class="success text-small" ng-if="Form.email.$valid">It's a valid e-mail!</span>
+                                        </div>
+                                        <div class="form-group" ng-class="{'has-error':Form.gender.$dirty && Form.gender.$invalid, 'has-success':Form.gender.$valid}">
+                                            <label class="control-label block"> Gender <span class="symbol required"></span> </label>
+                                            <div class="clip-radio radio-primary">
+                                                <input type="radio" id="wd-female" name="gender" value="female" ng-model="myModel.gender" required>
+                                                <label for="wd-female"> Female </label>
+                                                <input type="radio" id="wd-male" name="gender" value="male" ng-model="myModel.gender" required>
+                                                <label for="wd-male"> Male </label>
+                                            </div>
+                                            <span class="error text-small block" ng-if="Form.gender.$dirty && Form.gender.$error.required">Gender is required.</span>
+                                            <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'male'">Thank You, Mr. {{form.lastName}}!</span>
+                                            <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'female'">Thank You, Mrs. {{form.lastName}}!</span>
+                                        </div>
+                                  </fieldset>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

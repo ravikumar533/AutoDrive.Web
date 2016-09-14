@@ -57,8 +57,10 @@ app.constant('JS_REQUIRES', {
         'knobCtrl': 'assets/js/controllers/knobCtrl.js',
         'crop2Ctrl': 'assets/js/controllers/crop2Ctrl.js',
         'areaCtrl': 'assets/js/controllers/areaCtrl.js',
+        'studentCtrl': 'assets/js/controllers/studentCtrl.js',
         //*** Services
         'areaService': 'assets/js/services/areaService.js',
+        'studentService':'assets/js/services/studentService.js'
     },
     //*** angularJS Modules
     modules: [{

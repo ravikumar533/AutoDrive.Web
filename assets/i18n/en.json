@@ -57,6 +57,9 @@
             "areas":{
               "AREAS": "AREAS"
             },
+            "students":{
+                "STUDENTS":"STUDENTS"
+            },
             "dashboard": {
                 "MAIN": "Dashboard"
             },
