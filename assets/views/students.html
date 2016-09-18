@@ -16,13 +16,43 @@
                       <form>
                           <div class="row">
                               <div class="col-md-6">
-                                  
+                                  <div class="container-fluid container-fullw ng-scope">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="panel panel-white">
+                                                  <div class="panel-body">
+                                                      <h5 class="over-title margin-bottom-15">Student List</h5>
+                                                      <p>&nbsp;</p>
+                                                      <table class="table table-hover">
+                                                          <thead>
+                                                              <tr>
+                                                                  <th>Name</th>
+                                                                  <th>Instructor</th>
+                                                                  <th>Phone Number</th>
+                                                                  <th>&nbsp;</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              <tr ng-repeat="student in students">
+                                                                  <td>{{student.FullName}}</td>
+                                                                  <td>{{student.Instructor.InstructorName}}</td>
+                                                              </tr>
+                                                          </tbody>
+                                                      </table>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                               </div>
                               <div class="col-md-6">
                                   <fieldset>
                                       <legend>
-                                          <span>Success and Error Messages</span>
+                                          <span>Student Form</span>
                                       </legend>
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                      <div class="panel">
                                       <div class="form-group" ng-class="{'has-error':Form.firstName.$dirty && Form.firstName.$invalid, 'has-success':Form.firstName.$valid}">
                                             <label class="control-label"> First Name <span class="symbol required"></span> </label>
                                             <input type="text" placeholder="Enter your First Name" class="form-control" name="firstName" ng-model="myModel.firstName" required />
@@ -54,6 +84,83 @@
                                             <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'male'">Thank You, Mr. {{form.lastName}}!</span>
                                             <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'female'">Thank You, Mrs. {{form.lastName}}!</span>
                                         </div>
+                                        <div class="form-group" ng-class="{'has-error':Form.dob.$dirty && Form.dob.$error.requiered, 'has-success':Form.dob.$valid}">
+                                                <label class="control-label-block">
+                                                    Dob
+                                                    <span class="symbol required"></span>
+                                                </label>
+                                                <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" required="required" style=""><div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" template-url="uib/template/datepickerPopup/popup.html" class="ng-not-empty ng-valid ng-valid-date-disabled" style="">
+                                        <!-- ngIf: isOpen -->
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mobile</label>
+                                             <input type="text" placeholder="Enter a valid Mobile-number" class="form-control" name="mobile" ng-model="myModel.mobile" >
+                                        </div>
+                                        <div class="form-group" ng-class="{'has-error':Form.suburb.$dirty &amp;&amp; Form.suburb.$invalid, 'has-success':Form.suburb.$valid}">
+                                            <label for="form-field-select-1"> Choose your Suburb <span class="symbol required"></span> </label>
+                                            <select class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb" ng-model="myModel.suburb" required="">
+                                                <option value="">&nbsp;</option>
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AZ">Arizona</option>
+                                                <option value="AR">Arkansas</option>
+                                                <option value="CA">California</option>                                                
+                                            </select>
+                                            <span class="error text-small block ng-scope" ng-if="Form.suburb.$dirty &amp;&amp; Form.suburb.$error.required">Suburb is required.</span>
+                                        </div>
+                                        <div class="form-group" ng-class="{'has-error':Form.instructor.$dirty &amp;&amp; Form.instructor.$invalid, 'has-success':Form.instructor.$valid}">
+                                            <label for="form-field-select-2"> Choose your Instructor  <span class="symbol required"></span> </label>
+                                            <select class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="instructor" ng-model="myModel.instructor" required="">
+                                                <option value="">&nbsp;</option>
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AZ">Arizona</option>
+                                                <option value="AR">Arkansas</option>                                                
+                                            </select>
+                                            <span class="error text-small block ng-scope" ng-if="Form.instructor.$dirty &amp;&amp; Form.instructor.$error.required">Instructor is required.</span>
+                                        </div>
+                                      </div>
+                                      <div class="panel">
+                                          <div class="form-group">
+                                              <label class="control-label-block">
+                                                  LicenceNumber
+                                              </label>
+                                              <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencenumber" ng-model="myModel.licencenumber" >
+                                          </div>
+                                          <div class="form-group">
+                                              <label class="control-label-block">
+                                                  Licence-State
+                                              </label>
+                                              <input type="text" placeholder="Enter a valid Licence-State" class="form-control" name="licncesate" ng-model="myModel.licencestate" >
+                                          </div>
+                                          <div class="form-group">
+                                              <label class="control-label-block">
+                                                  Licence-Country
+                                              </label>
+                                              <input type="text" placeholder="Enter a valid Licence-Country" class="form-control" name="licencecountry" ng-model="myModel.licencecountry" >
+                                          </div>
+                                          <div class="form-group">
+                                              <label class="control-label-block">
+                                                Licence-ExpireOn
+                                              </label>
+                                              <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencecountry" ng-model="myModel.licencecountry" >
+                                          </div>
+                                      </div>
+                                      </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary">
+                                                             Submit
+                                                    </button>
+                                                    <button type="reset" class="btn btn-primary">
+                                                             Reset
+                                                    </button>
+                                              </div>
+                                          </div>
+                                      </div>
                                   </fieldset>
                               </div>
                           </div>
