@@ -9,6 +9,9 @@ app.constant('APP_MEDIAQUERY', {
     'tablet': 768,
     'mobile': 480
 });
+app.constant('APPLICATIONURLS',{
+    'Api':'http://AutoDrive/api/'
+});
 app.constant('JS_REQUIRES', {
     //*** Scripts
     scripts: {
@@ -58,9 +61,11 @@ app.constant('JS_REQUIRES', {
         'crop2Ctrl': 'assets/js/controllers/crop2Ctrl.js',
         'areaCtrl': 'assets/js/controllers/areaCtrl.js',
         'studentCtrl': 'assets/js/controllers/studentCtrl.js',
+        'instructorCtrl': 'assets/js/controllers/instructorCtrl.js',
         //*** Services
         'areaService': 'assets/js/services/areaService.js',
-        'studentService':'assets/js/services/studentService.js'
+        'studentService':'assets/js/services/studentService.js',
+        'instructorService':'assets/js/services/instructorService.js'
     },
     //*** angularJS Modules
     modules: [{

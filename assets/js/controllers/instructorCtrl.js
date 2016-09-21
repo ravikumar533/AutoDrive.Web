@@ -1,9 +1,13 @@
-app.controller('InstructorCtrl', ["$scope","$state", "instructorService","SweetAlert",  function ($scope,$state, instructorService,SweetAlert) {
+app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService",  function ($scope,$state, instructorService,areaService) {
     var student = 
     $scope.Instructors = [];
+    $scope.Areas = [];
    
     instructorService.get().success(function (res) {
         $scope.Instructors = res;
+    });
+    areaService.get().success(function(res){
+        $scope.Areas = res;
     });
 
     // Show Form
@@ -29,11 +33,9 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","SweetA
                 }
 
                 angular.element('.ng-invalid[name=' + firstError + ']').focus();
-                SweetAlert.swal("The form cannot be submitted because it contains validation errors!", "Errors are marked with a red, dashed border!", "error");
                 return;
 
             } else {
-                SweetAlert.swal("Good job!", "Your form is ready to be submitted!", "success");
                 //your code for submit
             }
 

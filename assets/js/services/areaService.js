@@ -2,9 +2,10 @@
  * Created by ravik_000 on 23-07-2016.
  */
 app.factory("areaService",[
-    "$http",
-    function ($http) {
-        var uri = "http://AutoDrive/api/";
+    "$http","APPLICATIONURLS",
+    function ($http,appurls) {
+        console.log(appurls);
+        var uri = appurls.Api;
 
         function get(areaId) {
 
