@@ -2,11 +2,24 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
     var student = 
     $scope.Instructors = [];
     $scope.Areas = [];
+    $scope.Suburbs=[
+        {
+            'suburbName':'suburbName 1',
+            'postalCode':'1000'
+        },
+        {
+            'suburbName':'suburbName 2',
+            'postalCode':'1001'
+        }
+    ];
     $scope.SelectedArea = {
         areaCode: '',
         name:''
     };
-
+    $scope.SelectedSuburb = {
+        suburbName:'',
+        postalCode:''
+    };
     GetInstructors();
     GetAreas();
     function GetInstructors(){
@@ -52,6 +65,7 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                 var areas = [];
                 areas.push($scope.SelectedArea);
                 $scope.instructorModel.areas = areas;
+                $scope.instructorModel.suburb = $scope.SelectedSuburb;
                 if(!$scope.instructorModel.id) {
                     instructorService.post($scope.instructorModel).success(function (e) {
                         //noinspection JSUnresolvedFunction
@@ -84,6 +98,13 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
             return area.areaCode == $scope.SelectedArea.areaCode;
         });
         $scope.SelectedArea.name = _selectedArea[0].name;       
+     }
+     $scope.ChangeSuburb = function () {
+        $scope.SelectedSuburb.postalCode = $scope.SuburbOptions;
+        var _selectedSuburb = $.grep($scope.Suburbs, function (suburb) {
+            return suburb.postalCode == $scope.SelectedSuburb.postalCode;
+        });
+        $scope.SelectedSuburb.suburbName = _selectedSuburb[0].suburbName;       
      }
     // Edit Student
 

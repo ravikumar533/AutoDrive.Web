@@ -59,7 +59,7 @@
                                         <form class="form-horizontal padding-bottom-20" role="form" name="Form"   novalidate ng-submit="form.submit(Form)">
                                             <div class="form-group" >
                                                 <label class="control-label"> Instructor Code <span class="symbol required"></span> </label>
-                                                <input type="text" placeholder="Enter your First Name" class="form-control" name="instructorCode" ng-readonly="true" ng-model="instructorModel.instructorCode" required />
+                                                <input type="text" placeholder="Enter your First Name" class="form-control" name="instructorCode"  ng-model="instructorModel.instructorCode" required />
                                                
                                             </div>
                                             <div class="form-group" ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
@@ -98,7 +98,7 @@
                                             </div>
                                              <div class="form-group">
                                                 <label>Mobile</label>
-                                                <input type="text" placeholder="Enter a home phone number" class="form-control" name="home" ng-model="instructorModel.home" >
+                                                <input type="text" placeholder="Enter a home phone number" class="form-control" name="home" ng-model="instructorModel.mobile" >
                                             </div>
                                             <div class="form-group">
                                                 <label>Home</label>
@@ -111,9 +111,8 @@
                                             </div>
                                             <div class="form-group" ng-class="{'has-error':Form.suburb.$dirty &amp;&amp; Form.suburb.$invalid, 'has-success':Form.suburb.$valid}">
                                                 <label for="form-field-select-1"> Choose your Suburb <span class="symbol required"></span> </label>
-                                                <select class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="Suburbs" required="">
-                                                    <option ng-value="suburb.suburbCode" >{{suburb.name}}</option>
-                                                    <option value="suburb1">Suburub1</option>                                                                                              
+                                                <select ng-change="ChangeSuburb()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="SuburbOptions" required="">
+                                                    <option ng-value="suburb.postalCode" ng-repeat="suburb in Suburbs">{{suburb.suburbName}}</option>
                                                 </select>
                                                 <span class="error text-small block ng-scope" ng-if="Form.area.$dirty &amp;&amp; Form.area.$error.required">area is required.</span>
                                             </div>
