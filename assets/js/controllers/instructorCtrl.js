@@ -2,14 +2,27 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
     var student = 
     $scope.Instructors = [];
     $scope.Areas = [];
-   
-    instructorService.get().success(function (res) {
-        $scope.Instructors = res;
-    });
-    areaService.get().success(function(res){
-        $scope.Areas = res;
-    });
+    $scope.SelectedArea = {
+        areaCode: '',
+        name:''
+    };
 
+    GetInstructors();
+    GetAreas();
+    function GetInstructors(){
+        instructorService.get().success(function (res) {
+            $scope.Instructors = res;
+        });
+    }
+    function GetAreas(){
+        areaService.get().success(function(res){
+            $scope.Areas = res;
+        });
+    }
+    instructorService.getSuburbs();
+    instructorService.getInstructorCode().success(function(res){
+        $scope.instructorModel.instructorCode = res;
+    });
     // Show Form
     $scope.master = $scope.instructorModel;
     // Create Student
@@ -25,7 +38,6 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                         if (firstError === null && !form[field].$valid) {
                             firstError = form[field].$name;
                         }
-
                         if (form[field].$pristine) {
                             form[field].$dirty = true;
                         }
@@ -37,6 +49,25 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
 
             } else {
                 //your code for submit
+                var areas = [];
+                areas.push($scope.SelectedArea);
+                $scope.instructorModel.areas = areas;
+                if(!$scope.instructorModel.id) {
+                    instructorService.post($scope.instructorModel).success(function (e) {
+                        //noinspection JSUnresolvedFunction
+                     
+                        $scope.instructorModel = angular.copy($scope.master);
+                        form.$setPristine(true);
+                        areas = [];
+                    });
+                }
+                else {
+                    instructorService.put($scope.instructorModel).success(function (e) {
+                        //noinspection JSUnresolvedFunction
+                        $scope.instructorModel = angular.copy($scope.master);
+                        form.$setPristine(true);
+                    });
+                }
             }
 
         },
@@ -47,8 +78,15 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
 
         }
     };
+     $scope.GetValue = function () {
+        $scope.SelectedArea.areaCode = $scope.AreaOptions;
+        var _selectedArea = $.grep($scope.Areas, function (area) {
+            return area.areaCode == $scope.SelectedArea.areaCode;
+        });
+        $scope.SelectedArea.name = _selectedArea[0].name;       
+     }
     // Edit Student
 
     // Delete Student
-
+    // Get Instructors
 }]);
