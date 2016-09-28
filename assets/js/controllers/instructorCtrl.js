@@ -1,25 +1,43 @@
 app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService",  function ($scope,$state, instructorService,areaService) {
     var student = 
     $scope.Instructors = [];
-    $scope.Areas = [];
+    //$scope.Areas = [];
+    //TODO:: Remove this code after service included
+    $scope.Areas = [{
+        areaCode:'E101',
+        areaName:'Epping'
+    },
+    {
+        areaCode:'E102',
+        areaName:'Chatswood'
+    }
+    ];
     $scope.Suburbs=[
         {
-            'suburbName':'suburbName 1',
-            'postalCode':'1000'
+            suburbName:'suburbName 1',
+            postalCode:'1000'
         },
         {
-            'suburbName':'suburbName 2',
-            'postalCode':'1001'
+            suburbName:'suburbName 2',
+            postalCode:'1001'
         }
     ];
-    $scope.SelectedArea = {
-        areaCode: '',
-        name:''
+    $scope.areaDropListsettings = {
+        displayProp: 'areaName', idProp: 'areaCode', externalIdProp: 'areaCode',showCheckAll:false,showUncheckAll:false,
+        smartButtonMaxItems: 2,
+        smartButtonTextConverter: function(itemText, originalItem) {        
+                return itemText;
+        }        
     };
+    $scope.areaTranslationTexts = {
+        buttonDefaultText:'Select Area'
+    }
+    
+    $scope.SelectedAreas = [];
     $scope.SelectedSuburb = {
         suburbName:'',
         postalCode:''
-    };
+    }
     GetInstructors();
     GetAreas();
     function GetInstructors(){
@@ -88,8 +106,12 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
         reset: function (form) {
 
             $scope.instructorModel = angular.copy($scope.master);
+            $scope.SelectedAreas = [];
+            $scope.SelectedSuburb = {
+                    suburbName:'',
+                    postalCode:''
+            };
             form.$setPristine(true);
-
         }
     };
      $scope.GetValue = function () {

@@ -29,5 +29,6 @@ angular.module("packet", [
 	'ncy-angular-breadcrumb',
 	'duScroll',
 	'pascalprecht.translate',
-	'FBAngular'
+	'FBAngular',
+	'angular-dropdown-multiselect'
 ]);

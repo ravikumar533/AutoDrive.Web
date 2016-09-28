@@ -52,114 +52,132 @@
                                       </legend>
                                       <div class="row">
                                           <div class="col-md-12">
-                                      <div class="panel">
-                                      <div class="form-group" ng-class="{'has-error':Form.firstName.$dirty && Form.firstName.$invalid, 'has-success':Form.firstName.$valid}">
-                                            <label class="control-label"> First Name <span class="symbol required"></span> </label>
-                                            <input type="text" placeholder="Enter your First Name" class="form-control" name="firstName" ng-model="myModel.firstName" required />
-                                            <span class="error text-small block" ng-if="Form.firstName.$dirty && Form.firstName.$invalid">First Name is required</span>
-                                            <span class="success text-small" ng-if="Form.firstName.$valid">Thank You!</span>
-                                        </div>
-                                        <div class="form-group" ng-class="{'has-error':Form.lastName.$dirty && Form.lastName.$invalid, 'has-success':Form.lastName.$valid}">
-                                            <label class="control-label"> Last Name <span class="symbol required"></span> </label>
-                                            <input type="text" placeholder="Enter your Last Name" class="form-control" name="lastName" ng-model="myModel.lastName" required />
-                                            <span class="error text-small block" ng-if="Form.lastName.$dirty && Form.lastName.$invalid">Last Name is required</span>
-                                            <span class="success text-small" ng-if="Form.lastName.$valid">Wonderful!</span>
-                                        </div>
-                                         <div class="form-group" ng-class="{'has-error':Form.email.$dirty && Form.email.$invalid, 'has-success':Form.email.$valid}">
-                                            <label class="control-label"> Email <span class="symbol required"></span> </label>
-                                            <input type="email" placeholder="Enter a valid E-mail" class="form-control" name="email" ng-model="myModel.email" required>
-                                            <span class="error text-small block" ng-if="Form.email.$dirty && Form.email.$error.required">Email is required.</span>
-                                            <span class="error text-small block" ng-if="Form.email.$error.email">Please, enter a valid email address.</span>
-                                            <span class="success text-small" ng-if="Form.email.$valid">It's a valid e-mail!</span>
-                                        </div>
-                                        <div class="form-group" ng-class="{'has-error':Form.gender.$dirty && Form.gender.$invalid, 'has-success':Form.gender.$valid}">
-                                            <label class="control-label block"> Gender <span class="symbol required"></span> </label>
-                                            <div class="clip-radio radio-primary">
-                                                <input type="radio" id="wd-female" name="gender" value="female" ng-model="myModel.gender" required>
-                                                <label for="wd-female"> Female </label>
-                                                <input type="radio" id="wd-male" name="gender" value="male" ng-model="myModel.gender" required>
-                                                <label for="wd-male"> Male </label>
-                                            </div>
-                                            <span class="error text-small block" ng-if="Form.gender.$dirty && Form.gender.$error.required">Gender is required.</span>
-                                            <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'male'">Thank You, Mr. {{form.lastName}}!</span>
-                                            <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'female'">Thank You, Mrs. {{form.lastName}}!</span>
-                                        </div>
-                                        <div class="form-group" ng-class="{'has-error':Form.dob.$dirty && Form.dob.$error.requiered, 'has-success':Form.dob.$valid}">
-                                                <label class="control-label-block">
-                                                    Dob
-                                                    <span class="symbol required"></span>
-                                                </label>
-                                                <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" required="required" style=""><div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" template-url="uib/template/datepickerPopup/popup.html" class="ng-not-empty ng-valid ng-valid-date-disabled" style="">
-                                        <!-- ngIf: isOpen -->
+                                      <form class="panel padding-bottom-20" role="form" name="Form"   novalidate ng-submit="form.submit(Form)">
+                                           <div class="row">
+                                                <div class="col-md-6">                                              
+                                                <div class="form-group" ng-class="{'has-error':Form.firstName.$dirty && Form.firstName.$invalid, 'has-success':Form.firstName.$valid}">
+                                                <label class="control-label"> First Name <span class="symbol required"></span> </label>
+                                                <input type="text" placeholder="Enter First Name" class="form-control" name="firstName" ng-model="studentModel.firstName" required />
+                                                <span class="error text-small block" ng-if="Form.firstName.$dirty && Form.firstName.$invalid">First Name is required</span>
+                                                <span class="success text-small" ng-if="Form.firstName.$valid">Thank You!</span>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="form-group" ng-class="{'has-error':Form.lastName.$dirty && Form.lastName.$invalid, 'has-success':Form.lastName.$valid}">
+                                                <label class="control-label"> Last Name <span class="symbol required"></span> </label>
+                                                <input type="text" placeholder="Enter Last Name" class="form-control" name="lastName" ng-model="studentModel.lastName" required />
+                                                <span class="error text-small block" ng-if="Form.lastName.$dirty && Form.lastName.$invalid">Last Name is required</span>
+                                                <span class="success text-small" ng-if="Form.lastName.$valid">Wonderful!</span>
+                                            </div>
+                                           </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Mobile</label>
-                                             <input type="text" placeholder="Enter a valid Mobile-number" class="form-control" name="mobile" ng-model="myModel.mobile" >
+                                         <div class="row">
+                                                <div class="col-md-6">     
+                                                    <div class="form-group" ng-class="{'has-error':Form.email.$dirty && Form.email.$invalid, 'has-success':Form.email.$valid}">
+                                                        <label class="control-label"> Email <span class="symbol required"></span> </label>
+                                                        <input type="email" placeholder="Enter a valid E-mail" class="form-control" name="email" ng-model="studentModel.email" required>
+                                                        <span class="error text-small block" ng-if="Form.email.$dirty && Form.email.$error.required">Email is required.</span>
+                                                        <span class="error text-small block" ng-if="Form.email.$error.email">Please, enter a valid email address.</span>
+                                                        <span class="success text-small" ng-if="Form.email.$valid">It's a valid e-mail!</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6"> 
+                                                    <div class="form-group" ng-class="{'has-error':Form.gender.$dirty && Form.gender.$invalid, 'has-success':Form.gender.$valid}">
+                                                        <label class="control-label block"> Gender <span class="symbol required"></span> </label>
+                                                        <div class="clip-radio radio-primary">
+                                                            <input type="radio" id="wd-female" name="gender" value="female" ng-model="studentModel.gender" required>
+                                                            <label for="wd-female"> Female </label>
+                                                            <input type="radio" id="wd-male" name="gender" value="male" ng-model="studentModel.gender" required>
+                                                            <label for="wd-male"> Male </label>
+                                                        </div>
+                                                        <span class="error text-small block" ng-if="Form.gender.$dirty && Form.gender.$error.required">Gender is required.</span>
+                                                        <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'male'">Thank You, Mr. {{form.lastName}}!</span>
+                                                        <span class="success text-small block" ng-if="Form.gender.$valid && form.gender == 'female'">Thank You, Mrs. {{form.lastName}}!</span>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        <div class="row">
+                                                <div class="col-md-6">                                                   
+                                                  <div class="form-group" ng-class="{'has-error':Form.dob.$dirty && Form.dob.$error.requiered, 'has-success':Form.dob.$valid}">
+                                                            <label class="control-label-block">
+                                                                DOB
+                                                                <span class="symbol required"></span>
+                                                            </label>
+                                                            <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" required="required" style=""><div uib-datepicker-popup-wrap="" ng-model="studentModel.date" ng-change="dateSelection(date)" template-url="uib/template/datepickerPopup/popup.html" class="ng-not-empty ng-valid ng-valid-date-disabled" style="">
+                                                    <!-- ngIf: isOpen -->
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                    <div class="col-md-6">    
+                                                        <div class="form-group">
+                                                            <label>Mobile</label>
+                                                            <input type="text" placeholder="Enter a valid Mobile-number" class="form-control" name="mobile" ng-model="studentModel.mobile" >
+                                                        </div>
+                                                    </div>
                                         </div>
-                                        <div class="form-group" ng-class="{'has-error':Form.suburb.$dirty &amp;&amp; Form.suburb.$invalid, 'has-success':Form.suburb.$valid}">
-                                            <label for="form-field-select-1"> Choose your Suburb <span class="symbol required"></span> </label>
-                                            <select class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb" ng-model="myModel.suburb" required="">
-                                                <option value="">&nbsp;</option>
-                                                <option value="AL">Alabama</option>
-                                                <option value="AK">Alaska</option>
-                                                <option value="AZ">Arizona</option>
-                                                <option value="AR">Arkansas</option>
-                                                <option value="CA">California</option>                                                
-                                            </select>
-                                            <span class="error text-small block ng-scope" ng-if="Form.suburb.$dirty &amp;&amp; Form.suburb.$error.required">Suburb is required.</span>
+                                         <div class="row">
+                                                <div class="col-md-6"> 
+                                                    <div class="form-group">
+                                                        <label for="form-field-select-1"> Choose Suburb <span class="symbol required"></span> </label>
+                                                       <select ng-change="ChangeSuburb()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="SuburbOptions">
+                                                            <option ng-value="suburb.postalCode" ng-repeat="suburb in Suburbs">{{suburb.suburbName}}</option>
+                                                        </select>                                             
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-md-6"> 
+                                                    <div class="form-group" ng-class="{'has-error':Form.instructor.$dirty &amp;&amp; Form.instructor.$invalid, 'has-success':Form.instructor.$valid}">
+                                                        <label for="form-field-select-2"> Assign Instructor  <span class="symbol required"></span> </label>
+                                                        <select ng-change="ChangeInstructor()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="InstructorOption">
+                                                            <option ng-value="instructor.InstructorCode" ng-repeat="instructor in Instructors">{{suburb.suburbName}}</option>
+                                                        </select>                                                        
+                                                        <span class="error text-small block ng-scope" ng-if="Form.instructor.$dirty &amp;&amp; Form.instructor.$error.required">Instructor is required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      
+                                      <div class="row">
+                                                <div class="col-md-6"> 
+                                                            <div class="form-group">
+                                                                <label class="control-label-block">
+                                                                    LicenceNumber
+                                                                </label>
+                                                                <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencenumber" ng-model="studentModel.licencenumber" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label-block">
+                                                                    Licence-State
+                                                                </label>
+                                                                <input type="text" placeholder="Enter a valid Licence-State" class="form-control" name="licncesate" ng-model="studentModel.licencestate" >
+                                                            </div>
+                                                        </div>
                                         </div>
-                                        <div class="form-group" ng-class="{'has-error':Form.instructor.$dirty &amp;&amp; Form.instructor.$invalid, 'has-success':Form.instructor.$valid}">
-                                            <label for="form-field-select-2"> Choose your Instructor  <span class="symbol required"></span> </label>
-                                            <select class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="instructor" ng-model="myModel.instructor" required="">
-                                                <option value="">&nbsp;</option>
-                                                <option value="AL">Alabama</option>
-                                                <option value="AK">Alaska</option>
-                                                <option value="AZ">Arizona</option>
-                                                <option value="AR">Arkansas</option>                                                
-                                            </select>
-                                            <span class="error text-small block ng-scope" ng-if="Form.instructor.$dirty &amp;&amp; Form.instructor.$error.required">Instructor is required.</span>
-                                        </div>
-                                      </div>
-                                      <div class="panel">
-                                          <div class="form-group">
-                                              <label class="control-label-block">
-                                                  LicenceNumber
-                                              </label>
-                                              <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencenumber" ng-model="myModel.licencenumber" >
-                                          </div>
-                                          <div class="form-group">
-                                              <label class="control-label-block">
-                                                  Licence-State
-                                              </label>
-                                              <input type="text" placeholder="Enter a valid Licence-State" class="form-control" name="licncesate" ng-model="myModel.licencestate" >
-                                          </div>
+                                        <div class="row">
+                                                <div class="col-md-6"> 
                                           <div class="form-group">
                                               <label class="control-label-block">
                                                   Licence-Country
                                               </label>
-                                              <input type="text" placeholder="Enter a valid Licence-Country" class="form-control" name="licencecountry" ng-model="myModel.licencecountry" >
+                                              <input type="text" placeholder="Enter a valid Licence-Country" class="form-control" name="licencecountry" ng-model="studentModel.licencecountry" >
                                           </div>
+                                                </div>
+                                                <div class="col-md-6"> 
                                           <div class="form-group">
                                               <label class="control-label-block">
                                                 Licence-ExpireOn
                                               </label>
-                                              <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencecountry" ng-model="myModel.licencecountry" >
+                                              <input type="text" placeholder="Enter a valid Licence-Number" class="form-control" name="licencecountry" ng-model="studentModel.licencecountry" >
                                           </div>
+                                                </div>
                                       </div>
+                                      
+                                     <div class="form-group">                                            
+                                                <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
+                                                <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>                                            
                                       </div>
+                                      </form>
                                       </div>
-                                      <div class="row">
-                                          <div class="col-md-12">
-                                              <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary">
-                                                             Submit
-                                                    </button>
-                                                    <button type="reset" class="btn btn-primary">
-                                                             Reset
-                                                    </button>
-                                              </div>
-                                          </div>
                                       </div>
                                   </fieldset>
                               </div>

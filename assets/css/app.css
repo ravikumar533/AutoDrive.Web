@@ -1,0 +1,13 @@
+/* CSS for ui-switch */
+.switch {
+    width:92px;
+}
+.switch.checked small {
+  left: 62px;
+}
+
+/* CSS for angular-dropdown-multiselect */
+.dropdown-multiselect dropdown-toggle
+{
+    width: 150px;
+}
