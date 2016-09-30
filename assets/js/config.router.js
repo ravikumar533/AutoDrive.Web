@@ -501,7 +501,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     }).state('app.Instructors', {
         url: '/instructors',
         templateUrl: "assets/views/instructor.html",
-        resolve: loadSequence('instructorService','areaService', 'instructorCtrl')
+        resolve: loadSequence('instructorService','areaService','suburbService', 'instructorCtrl')
     });
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
     function loadSequence() {

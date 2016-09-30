@@ -1,4 +1,4 @@
-app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService",  function ($scope,$state, instructorService,areaService) {
+app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService","suburbService" ,"DropDownSettings" ,function ($scope,$state, instructorService,areaService,suburbService,DropDownSettings) {
     var student = 
     $scope.Instructors = [];
     //$scope.Areas = [];
@@ -12,27 +12,15 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
         areaName:'Chatswood'
     }
     ];
-    $scope.Suburbs=[
-        {
-            suburbName:'suburbName 1',
-            postalCode:'1000'
-        },
-        {
-            suburbName:'suburbName 2',
-            postalCode:'1001'
-        }
-    ];
-    $scope.areaDropListsettings = {
-        displayProp: 'areaName', idProp: 'areaCode', externalIdProp: 'areaCode',showCheckAll:false,showUncheckAll:false,
-        smartButtonMaxItems: 2,
-        smartButtonTextConverter: function(itemText, originalItem) {        
-                return itemText;
-        }        
-    };
+    $scope.Suburbs=[ ];
+    $scope.areaDropListsettings = DropDownSettings.Area;
+    $scope.suburbDropListsettings = DropDownSettings.Suburb;
     $scope.areaTranslationTexts = {
         buttonDefaultText:'Select Area'
     }
-    
+    $scope.suburbTranslationTexts = {
+        buttonDefaultText:'Select Suburbs'
+    }
     $scope.SelectedAreas = [];
     $scope.SelectedSuburb = {
         suburbName:'',
@@ -50,13 +38,13 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
             $scope.Areas = res;
         });
     }
-    instructorService.getSuburbs();
-    instructorService.getInstructorCode().success(function(res){
-        $scope.instructorModel.instructorCode = res;
+    suburbService.get().then(function(res){
+        $scope.Suburbs = res.data;
     });
+    
     // Show Form
     $scope.master = $scope.instructorModel;
-    // Create Student
+    // Create  / Edit Instructor
     $scope.form = {
 
         submit: function (form) {
@@ -84,7 +72,7 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                 areas.push($scope.SelectedArea);
                 $scope.instructorModel.areas = areas;
                 $scope.instructorModel.suburb = $scope.SelectedSuburb;
-                if(!$scope.instructorModel.id) {
+                if(!$scope.instructorModel.id) { // Create 
                     instructorService.post($scope.instructorModel).success(function (e) {
                         //noinspection JSUnresolvedFunction
                      
@@ -93,7 +81,7 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                         areas = [];
                     });
                 }
-                else {
+                else { // Update
                     instructorService.put($scope.instructorModel).success(function (e) {
                         //noinspection JSUnresolvedFunction
                         $scope.instructorModel = angular.copy($scope.master);
@@ -108,8 +96,8 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
             $scope.instructorModel = angular.copy($scope.master);
             $scope.SelectedAreas = [];
             $scope.SelectedSuburb = {
-                    suburbName:'',
-                    postalCode:''
+                suburbName:'',
+                postalCode:''
             };
             form.$setPristine(true);
         }
@@ -128,8 +116,15 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
         });
         $scope.SelectedSuburb.suburbName = _selectedSuburb[0].suburbName;       
      }
-    // Edit Student
+    // Fill the Form on Edit Student Click
 
     // Delete Student
+    $scope.removeRow = function ($event,instructorCode) {
+       if(confirm("Are you sure, you want delete?")){
+           instructorService.deleteInstructor(instructorCode).success(function (e) {
+               angular.element($event.currentTarget).parents("tr:first").remove();
+           });
+       }
+    };
     // Get Instructors
 }]);

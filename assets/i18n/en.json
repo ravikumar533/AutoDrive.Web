@@ -60,6 +60,9 @@
             "students":{
                 "STUDENTS":"STUDENTS"
             },
+            "instructor":{
+                "INSTRUCTORS":"INSTRUCTORS"
+            },
             "dashboard": {
                 "MAIN": "Dashboard"
             },

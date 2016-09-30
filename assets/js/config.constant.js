@@ -12,6 +12,32 @@ app.constant('APP_MEDIAQUERY', {
 app.constant('APPLICATIONURLS',{
     'Api':'http://AutoDrive/api/'
 });
+app.constant('DropDownSettings', {
+    'Area':{
+        displayProp: 'areaName', 
+        idProp: 'areaCode', 
+        externalIdProp: '',
+        showCheckAll:false,
+        showUncheckAll:false,
+        smartButtonMaxItems: 2,
+        smartButtonTextConverter: function(itemText, originalItem) {        
+                return itemText;
+        }        
+    },
+    'Suburb':{
+        displayProp: 'Suburb', 
+        idProp: 'PostCode', 
+        externalIdProp: '',
+        enableSearch: true,
+        showCheckAll:false,
+        showUncheckAll:false,
+        smartButtonMaxItems: 2,
+        selectionLimit: 1,
+        smartButtonTextConverter: function(itemText, originalItem) {        
+                return itemText;
+        }     
+    }
+})
 app.constant('JS_REQUIRES', {
     //*** Scripts
     scripts: {
@@ -65,7 +91,8 @@ app.constant('JS_REQUIRES', {
         //*** Services
         'areaService': 'assets/js/services/areaService.js',
         'studentService':'assets/js/services/studentService.js',
-        'instructorService':'assets/js/services/instructorService.js'
+        'instructorService':'assets/js/services/instructorService.js',
+        'suburbService':'assets/js/services/suburbService.js'
     },
     //*** angularJS Modules
     modules: [{

@@ -3,7 +3,6 @@
  */
 app.controller('AreaCtrl', ["$scope", "areaService","$state", "SweetAlert", function ($scope, areaService, $state, SweetAlert) {
     $scope.Areas = [];
-
     //noinspection JSUnresolvedFunction
     $scope.master= $scope.areaModel;
     GetAreas();

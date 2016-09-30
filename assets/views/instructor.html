@@ -77,7 +77,7 @@
                                                         <span class="success text-small" ng-if="Form.email.$valid">It's a valid e-mail!</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">  
+                                                <div class="col-md-4">  
                                                     <div class="form-group" ng-class="{'has-error':Form.gender.$dirty && Form.gender.$invalid, 'has-success':Form.gender.$valid}">
                                                         <label class="block"> Gender <span class="symbol required"></span> </label>
                                                         <div class="clip-radio radio-primary">
@@ -86,6 +86,14 @@
                                                             <input type="radio" id="wd-male" name="gender" value="male" ng-model="instructorModel.gender" required>
                                                             <label for="wd-male"> Male </label>
                                                         </div>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group" >
+                                                        <label class="control-label">  Status</label>
+                                                        <div>
+                                                            <switch id="enabled" name="enabled" ng-model="instructorModel.status" class="green " on="Active" off="InActive"></switch>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,25 +133,16 @@
                                                 <div class="col-md-6">                                                    
                                                     <div class="form-group" >
                                                         <label for="form-field-select-1"> Choose Suburb </label>
-                                                        <select ng-change="ChangeSuburb()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="SuburbOptions">
-                                                            <option ng-value="suburb.postalCode" ng-repeat="suburb in Suburbs">{{suburb.suburbName}}</option>
-                                                        </select>                                                        
+                                                        <div ng-dropdown-multiselect="" options="Suburbs" selected-model="SelectedSuburbModel" extra-settings="suburbDropListsettings" translation-texts="suburbTranslationTexts" ></div>                                                        
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                                    
+                                                <div class="col-md-6">                                                    
                                                     <div class="form-group" >
                                                         <label for="form-field-select-1"> Choose Area </label>
                                                         <div ng-dropdown-multiselect="" options="Areas" selected-model="SelectedAreas" extra-settings="areaDropListsettings" translation-texts="areaTranslationTexts" ></div>                                                                                                          
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group" >
-                                                        <label class="control-label">  Status</label>
-                                                        <div>
-                                                            <switch id="enabled" name="enabled" ng-model="instructorModel.status" class="green " on="Active" off="InActive"></switch>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>                                            
                                              <div class="form-group">                                            
                                                 <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
