@@ -13,10 +13,24 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
 
     $scope.events = [
 	  {
-	      title: 'Birthday Party',
-	      type: 'home',
-	      startsAt: new Date(y, m, 5, 19, 0),
-	      endsAt: new Date(y, m, 5, 22, 30)
+          _id: '123456789',
+          title: 'Student_Name',
+          lessonDate:new Date(y, m, 8, 10, 30),
+	      startsAt: new Date(y, m, 8, 10, 30),
+	      endsAt: new Date(y, m, 8, 10, 30),
+	      type: 'lesson',
+	      student:{
+              _id:'12312312312',
+              studentName:"StudentName2",
+              studentCode:'SN-102'
+          },
+          instructor:{
+              _id:'2342342342342',
+              instructorName:'Instructor_name2'
+          },
+          pickupLocation:'pickup location test',
+          studentMobile:'041204765',
+          testStatus:'Passed'
 	  },
 	  {
 	      title: 'AngularJS Seminar',
@@ -46,7 +60,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
 
     $scope.calendarView = 'month';
     $scope.calendarDate = new Date();
-
+    
     function showModal(action, event) {
         var modalInstance = $aside.open({
             templateUrl: 'calendarEvent.html',
@@ -65,7 +79,35 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
                 };
                 $scope.maxDate = new Date(2020, 5, 22);
 				$scope.minDate = new Date(1970, 12, 31);
-                
+                $scope.students = [{
+                                    _id:'123123123123',
+                                    studentName:'StudentName1',
+                                    studentCode:'SN-101'
+                                },
+                                {
+                                    _id:'12312312312',
+                                    studentName:"StudentName2",
+                                    studentCode:'SN-102'
+                                },
+                                {
+                                    _id:'12312312282',
+                                    studentName:"StudentName3",
+                                    studentCode:'SN-103'
+                                }];
+                $scope.instructors = [
+                                    {
+                                        _id:'2342342342343',
+                                        instructorName:'Instructor_name1'
+                                    },
+                                    {
+                                        _id:'2342342342342',
+                                        instructorName:'Instructor_name2'
+                                    },
+                                    {
+                                        _id:'2342342342as2',
+                                        instructorName:'Instructor_nam3'
+                                    }
+                                ];
                  $scope.startOptions = {
 					showWeeks : false,
 					startingDay : 1,

@@ -100,15 +100,23 @@
                                 </div>
                                 <div class="form-group">
                                      <label for="form-field-select-2"> Select Instructor  <span class="symbol required"></span> </label>
-                                     <select ng-change="ChangeInstructor()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="instructor"  ng-model="InstructorOption">
-                                         <option ng-value="instructor.InstructorCode" ng-repeat="instructor in Instructors">{{instructor.InstructorName}}</option>
-                                     </select>  
+                                     <select name="instructor" ng-model="event.instructor" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
+                                        ng-options="obj as obj.instructorName for obj in instructors">
+                                      </select> 
+                                      {{event.instructor}}
+                                     <!--<select ng-change="ChangeInstructor()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="instructor"  ng-model="event.instructor._id">
+                                         <option ng-value="instructor._id" ng-repeat="instructor in instructors">{{instructor.instructorName}}</option>
+                                     </select>-->
                                 </div>
                                 <div class="form-group">
                                      <label for="form-field-select-2"> Assign Student  <span class="symbol required"></span> </label>
-                                     <select ng-change="ChangeStudent()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="student"  ng-model="StudentOption">
-                                         <option ng-value="student.studentCode" ng-repeat="student in Students">{{student.studentCode + "-" + student.studentName}}</option>
-                                     </select>  
+                                      <select name="student" ng-model="event.student" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
+                                        ng-options="obj.studentName for obj in students">
+                                      </select> 
+                                      {{event.student}}
+                                     <!--<select ng-change="ChangeStudent()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="student"  ng-model="event.student._id">
+                                         <option ng-value="student._id" ng-repeat="student in students">{{student.studentCode + "-" + student.studentName}}</option>
+                                     </select>-->  
                                 </div>
                                 <div class="form-group">
                                     <label>
@@ -123,25 +131,25 @@
                                     <label>
                                         Start Time
                                     </label>                                    
-                                    <uib-timepicker ng-model="event.startTime" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
+                                    <uib-timepicker ng-model="event.startsAt" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         End Time
                                     </label>                                    
-                                    <uib-timepicker ng-model="event.endTime" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
+                                    <uib-timepicker ng-model="event.endsAt" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         Student Mobile Number
                                     </label>                                    
-                                    <input type="text" placeholder="Student Mobile-number" class="form-control" name="mobile" ng-model="event.mobile" >
+                                    <input type="text" placeholder="Student Mobile-number" class="form-control" name="mobile" ng-model="event.studentMobile" >
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         Student Pickup Location
                                     </label>                                    
-                                    <input type="text" placeholder="Student Pickup Location" class="form-control" name="location" ng-model="event.location" >
+                                    <input type="text" placeholder="Student Pickup Location" class="form-control" name="location" ng-model="event.pickupLocation" >
                                 </div>
                                 <div class="form-group" ng-class="{'has-error':Form.type.$dirty && Form.gentypeder.$invalid, 'has-success':Form.type.$valid}">
                                     <label class="control-label block"> Type <span class="symbol required"></span> </label>
