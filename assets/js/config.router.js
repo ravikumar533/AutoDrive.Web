@@ -497,7 +497,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     }).state('app.Students', {
         url: '/students',
         templateUrl: "assets/views/students.html",
-        resolve: loadSequence('studentService', 'studentCtrl')
+        resolve: loadSequence('studentService','instructorService','suburbService', 'studentCtrl')
     }).state('app.Instructors', {
         url: '/instructors',
         templateUrl: "assets/views/instructor.html",
