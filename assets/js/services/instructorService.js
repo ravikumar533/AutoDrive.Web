@@ -43,8 +43,13 @@ app.factory("instructorService",[
             });
             
         }
-        function getSuburbs(){
-            return $http.get('/assets/files/Suburbs.json/');
+        function getInstructorCode(){
+            return $http({
+                method: "GET",
+                url: uri + "instructor/InstructorCode",
+                headers: { "Content-Type": "application/json" },
+
+            });
         }
         
         var instructorFactory = {
@@ -52,7 +57,7 @@ app.factory("instructorService",[
             put:put,
             deleteInstructor:deleteInstructor,
             post:post,
-            getSuburbs:getSuburbs
+            getInstructorCode:getInstructorCode
         };
 
         return instructorFactory;

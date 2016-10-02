@@ -14,7 +14,7 @@ app.constant('APPLICATIONURLS',{
 });
 app.constant('DropDownSettings', {
     'Area':{
-        displayProp: 'areaName', 
+        displayProp: 'name', 
         idProp: 'areaCode', 
         externalIdProp: '',
         showCheckAll:false,
@@ -24,18 +24,40 @@ app.constant('DropDownSettings', {
                 return itemText;
         }        
     },
-    'Suburb':{
-        displayProp: 'Suburb', 
-        idProp: 'PostCode', 
+    'Area_Translation_text': {
+        buttonDefaultText:'Select Area'
+    },
+    'Instructor':{
+        displayProp: 'instructorName', 
+        idProp: 'id', 
         externalIdProp: '',
         enableSearch: true,
         showCheckAll:false,
         showUncheckAll:false,
-        smartButtonMaxItems: 2,
-        selectionLimit: 1,
-        smartButtonTextConverter: function(itemText, originalItem) {        
-                return itemText;
+        selectionLimit: 1,  
+        smartButtonMaxItems: 1,      
+        smartButtonTextConverter: function(itemText, originalItem) {   
+             return itemText;
         }     
+    },
+    'Instructor_Translation_text': {
+        buttonDefaultText:'Select Instructor'
+    },
+    'Suburb':{
+        displayProp: 'SuburbName', 
+        idProp: 'PostalCode', 
+        externalIdProp: '',
+        enableSearch: true,
+        showCheckAll:false,
+        showUncheckAll:false,
+        selectionLimit: 1,  
+        smartButtonMaxItems: 1,      
+        smartButtonTextConverter: function(itemText, originalItem) {   
+             return itemText;
+        }     
+    },
+    'Suburb_Translation_text': {
+        buttonDefaultText:'Select Suburbs'
     }
 })
 app.constant('JS_REQUIRES', {

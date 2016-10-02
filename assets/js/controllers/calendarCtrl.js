@@ -70,7 +70,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
             controller: function ($scope, $uibModalInstance) {
                 $scope.$modalInstance = $uibModalInstance;
                 $scope.action = action;
-                $scope.event = event;
+             //   $scope.event = event;
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -108,6 +108,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
                                         instructorName:'Instructor_nam3'
                                     }
                                 ];
+                                $scope.event.student = $scope.students[2];
                  $scope.startOptions = {
 					showWeeks : false,
 					startingDay : 1,

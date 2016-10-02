@@ -118,19 +118,14 @@
                                          <div class="row">
                                                 <div class="col-md-6"> 
                                                     <div class="form-group">
-                                                        <label for="form-field-select-1"> Choose Suburb <span class="symbol required"></span> </label>
-                                                       <select ng-change="ChangeSuburb()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="SuburbOptions">
-                                                            <option ng-value="suburb.postalCode" ng-repeat="suburb in Suburbs">{{suburb.suburbName}}</option>
-                                                        </select>                                             
+                                                          <label for="form-field-select-1"> Choose Suburb </label>
+                                                        <div ng-dropdown-multiselect="" options="Suburbs" selected-model="SelectedSuburb" extra-settings="suburbDropListsettings" translation-texts="suburbTranslationTexts" ></div>                                         
                                                     </div>
                                                     </div>
                                                     <div class="col-md-6"> 
                                                     <div class="form-group" ng-class="{'has-error':Form.instructor.$dirty &amp;&amp; Form.instructor.$invalid, 'has-success':Form.instructor.$valid}">
-                                                        <label for="form-field-select-2"> Assign Instructor  <span class="symbol required"></span> </label>
-                                                        <select ng-change="ChangeInstructor()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="suburb"  ng-model="InstructorOption">
-                                                            <option ng-value="instructor.InstructorCode" ng-repeat="instructor in Instructors">{{suburb.suburbName}}</option>
-                                                        </select>                                                        
-                                                        <span class="error text-small block ng-scope" ng-if="Form.instructor.$dirty &amp;&amp; Form.instructor.$error.required">Instructor is required.</span>
+                                                          <label for="form-field-select-1"> Choose Instructor </label>
+                                                        <div ng-dropdown-multiselect="" options="Instructors" selected-model="SelectedInstructor" extra-settings="instructorDropListsettings" translation-texts="instructorTranslationTexts" ></div>
                                                     </div>
                                                 </div>
                                             </div>

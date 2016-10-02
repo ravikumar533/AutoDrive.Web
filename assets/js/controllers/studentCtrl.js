@@ -1,41 +1,25 @@
 /**
  * Created by ravik_000 on 03-09-2016.
  */
-app.controller('StudentCtrl', ["$scope","$state", "studentService", function ($scope,$state, studentService) {
-    var student = 
+app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorService","suburbService" ,"DropDownSettings", function ($scope,$state, studentService,instructorService,suburbService,DropDownSettings) {
+    
+    //Definition
     $scope.Students = [];
-   
-    studentService.get().success(function (res) {
-        $scope.Students = res;
-    });
-    $scope.Suburbs=[
-        {
-            suburbName:'suburbName 1',
-            postalCode:'1000'
-        },
-        {
-            suburbName:'suburbName 2',
-            postalCode:'1001'
-        }
-    ];
-    $scope.Instructors=[
-        {
-            InstructorCode:'IN101',
-            InstructorName:'Instructor1'
-        },
-        {
-            InstructorCode:'IN102',
-            InstructorName:'Instructor2'
-        }
-    ];
-     $scope.SelectedSuburb = {
-        suburbName:'',
-        postalCode:''
-    }
-     $scope.SelectedInstructor = {
-        InstructorCode:'',
-        InstructorName:''
-    }
+
+    $scope.Instructors = [];
+    $scope.SelectedInstructor =[];
+    $scope.instructorDropListsettings= {};
+    $scope.instructorTranslationTexts={};
+    
+    $scope.Suburbs = [];
+    $scope.SelectedSuburb =[];
+    $scope.suburbDropListsettings = {};
+    $scope.suburbTranslationTexts = {};
+
+// Call Route Functions
+    GetInstructors();
+    GetSuburbs();
+    GetStudents();
     // Show Form
     $scope.master = $scope.studentModel;
     // Create Student
@@ -63,11 +47,10 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService", function ($s
             } else {
                 //your code for submit                
                 $scope.studentModel.instructor = $scope.SelectedInstructor;
-                $scope.studentModel.suburb = $scope.SelectedSuburb;
+                $scope.studentModel.suburbs = $scope.SelectedSuburb;
                 if(!$scope.studentModel.id) {
                     studentService.post($scope.studentModel).success(function (e) {
-                        //noinspection JSUnresolvedFunction
-                     
+                        //noinspection JSUnresolvedFunction                     
                         $scope.studentModel = angular.copy($scope.master);
                         form.$setPristine(true);
                         areas = [];
@@ -77,6 +60,8 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService", function ($s
                     studentService.put($scope.studentModel).success(function (e) {
                         //noinspection JSUnresolvedFunction
                         $scope.studentModel = angular.copy($scope.master);
+                        $scope.SelectedInstructor = {};
+                        $scope.SelectedSuburb ={};
                         form.$setPristine(true);
                     });
                 }
@@ -84,36 +69,50 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService", function ($s
 
         },
         reset: function (form) {
-
             $scope.studentModel = angular.copy($scope.master);
-            $scope.SelectedInstructor = {
-                InstructorCode:'',
-                InstructorName:''
-            };
-            $scope.SelectedSuburb = {
-                    suburbName:'',
-                    postalCode:''
-            };
             form.$setPristine(true);
         }
     };
-     $scope.ChangeSuburb = function () {
-        $scope.SelectedSuburb.postalCode = $scope.SuburbOptions;
-        var _selectedSuburb = $.grep($scope.Suburbs, function (suburb) {
-            return suburb.postalCode == $scope.SelectedSuburb.postalCode;
-        });
-        $scope.SelectedSuburb.suburbName = _selectedSuburb[0].suburbName;       
-     }
-      $scope.ChangeInstructor = function () {
-        $scope.SelectedInstructor.InstructorCode = $scope.InstructorOption;
-        /*var _selectedSuburb = $.grep($scope.Suburbs, function (suburb) {
-            return suburb.postalCode == $scope.SelectedSuburb.postalCode;
-        });*/
-        //$scope.SelectedInstructor.InstructorName = _selectedSuburb[0].suburbName;       
-     }
-    // Edit Student
-
+    
     // Delete Student
-
+    $scope.removeRow = function ($event,studentId) {
+       if(confirm("Are you sure, you want delete?")){
+           studentService.deleteStudent(studentId).success(function (e) {
+               angular.element($event.currentTarget).parents("tr:first").remove();
+           });
+       }
+    };
+    // Edit Student
+    $scope.editRow = function($event,studentId){
+        var data = $scope.Students;
+        angular.forEach(data,function(value,index){            
+            if(value.id == studentId) {
+                //var editRecord = value;
+                $scope.instructorModel = value;
+                $scope.SelectedInstructor = value.instructor;
+                $scope.SelectedSuburb = {
+                    PostalCode : value.suburb.postalCode,
+                    SuburbName : value.suburb.suburbName
+                }
+            }
+        });
+    };
+    // Service Calls
+    function GetStudents(){
+        studentService.get().success(function(res){
+            $scope.Students = res;
+        });
+    }
+    function GetInstructors(){// Get Instructors
+        instructorService.get().success(function (res) {
+            $scope.Instructors = res;
+        });
+    }
+    
+    function GetSuburbs(){ // Get Suburbs
+        suburbService.get().then(function(res){
+            $scope.Suburbs = res.data.slice(0,100);
+        });
+    }
 }]);
 

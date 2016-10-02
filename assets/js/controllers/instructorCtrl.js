@@ -1,53 +1,30 @@
 app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService","suburbService" ,"DropDownSettings" ,function ($scope,$state, instructorService,areaService,suburbService,DropDownSettings) {
-    var student = 
+    //Definitions 
     $scope.Instructors = [];
+    $scope.Areas = [];
+    $scope.SelectedAreas = []; // Selected Area Model
+    $scope.Suburbs = [];
+    $scope.SelectedSuburbs = [];
     //$scope.Areas = [];
     //TODO:: Remove this code after service included
-    $scope.Areas = [{
-        areaCode:'E101',
-        areaName:'Epping'
-    },
-    {
-        areaCode:'E102',
-        areaName:'Chatswood'
-    }
-    ];
-    $scope.Suburbs=[ ];
+
+    // Area Drop Down    
     $scope.areaDropListsettings = DropDownSettings.Area;
-    $scope.suburbDropListsettings = DropDownSettings.Suburb;
-    $scope.areaTranslationTexts = {
-        buttonDefaultText:'Select Area'
-    }
-    $scope.suburbTranslationTexts = {
-        buttonDefaultText:'Select Suburbs'
-    }
-    $scope.SelectedAreas = [];
-    $scope.SelectedSuburb = {
-        suburbName:'',
-        postalCode:''
-    }
+    $scope.areaTranslationTexts = DropDownSettings.Area_Translation_text;
+
+    // Suburbs DropDown
+    $scope.suburbDropListsettings = DropDownSettings.Suburb;    
+    $scope.suburbTranslationTexts = DropDownSettings.Suburb_Translation_text;
+    
+    // Loadin Instructors , Areas and Suburbs; calling Functions
     GetInstructors();
     GetAreas();
-    function GetInstructors(){
-        instructorService.get().success(function (res) {
-            $scope.Instructors = res;
-        });
-    }
-    function GetAreas(){
-        areaService.get().success(function(res){
-            $scope.Areas = res;
-        });
-    }
-    suburbService.get().then(function(res){
-        $scope.Suburbs = res.data;
-    });
-    
-    // Show Form
-    $scope.master = $scope.instructorModel;
+    GetSuburbs();
+    GetInstructorCode();
     // Create  / Edit Instructor
+    $scope.master = $scope.instructorModel;    
     $scope.form = {
-
-        submit: function (form) {
+        submit: function (form) {    // Form Submit 
             var firstError = null;
             if (form.$invalid) {
 
@@ -62,21 +39,16 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                         }
                     }
                 }
-
                 angular.element('.ng-invalid[name=' + firstError + ']').focus();
                 return;
 
             } else {
-                //your code for submit
-                var areas = [];
-                areas.push($scope.SelectedArea);
-                $scope.instructorModel.areas = areas;
-                $scope.instructorModel.suburb = $scope.SelectedSuburb;
-                if(!$scope.instructorModel.id) { // Create 
+                // Form Submition
+               $scope.instructorModel.suburb = $scope.SelectedSuburbs;
+               $scope.instructorModel.areas = $scope.SelectedAreas;
+               if(!$scope.instructorModel.id) { // Create 
                     instructorService.post($scope.instructorModel).success(function (e) {
-                        //noinspection JSUnresolvedFunction
-                     
-                        $scope.instructorModel = angular.copy($scope.master);
+                        $scope.instructorModel = angular.copy($scope.master); // Reset Form
                         form.$setPristine(true);
                         areas = [];
                     });
@@ -92,39 +64,57 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
 
         },
         reset: function (form) {
-
-            $scope.instructorModel = angular.copy($scope.master);
+            // Reset model
+            $scope.instructorModel ={};
+            $scope.instructorModel= angular.copy($scope.master);  
             $scope.SelectedAreas = [];
-            $scope.SelectedSuburb = {
-                suburbName:'',
-                postalCode:''
-            };
+            $scope.SelectedSuburbs = [];         
             form.$setPristine(true);
+            $scope.form.$setValidity();
         }
     };
-     $scope.GetValue = function () {
-        $scope.SelectedArea.areaCode = $scope.AreaOptions;
-        var _selectedArea = $.grep($scope.Areas, function (area) {
-            return area.areaCode == $scope.SelectedArea.areaCode;
-        });
-        $scope.SelectedArea.name = _selectedArea[0].name;       
-     }
-     $scope.ChangeSuburb = function () {
-        $scope.SelectedSuburb.postalCode = $scope.SuburbOptions;
-        var _selectedSuburb = $.grep($scope.Suburbs, function (suburb) {
-            return suburb.postalCode == $scope.SelectedSuburb.postalCode;
-        });
-        $scope.SelectedSuburb.suburbName = _selectedSuburb[0].suburbName;       
-     }
-    // Fill the Form on Edit Student Click
-
-    // Delete Student
-    $scope.removeRow = function ($event,instructorCode) {
+    // Delete Instructor
+    $scope.removeRow = function ($event,instructorId) {
        if(confirm("Are you sure, you want delete?")){
-           instructorService.deleteInstructor(instructorCode).success(function (e) {
+           instructorService.deleteInstructor(instructorId).success(function (e) {
                angular.element($event.currentTarget).parents("tr:first").remove();
            });
        }
     };
-    // Get Instructors
+    //Edit Instructor
+    $scope.editRow = function($event,instructorId){
+        var data = $scope.Instructors;
+        angular.forEach(data,function(value,index){            
+            if(value.id == instructorId) {
+                //var editRecord = value;
+                $scope.instructorModel = value;
+                $scope.SelectedAreas = value.areas;
+                $scope.SelectedSuburbs = {
+                    PostalCode : value.suburb.postalCode,
+                    SuburbName : value.suburb.suburbName
+                }
+            }
+        });
+    };
+    // Service Calls
+    function GetInstructors(){// Get Instructors
+        instructorService.get().success(function (res) {
+            $scope.Instructors = res;
+        });
+    }
+    function GetAreas(){ // Get Areas
+        areaService.get().success(function(res){
+            $scope.Areas = res;
+        });
+    }
+    function GetSuburbs(){ // Get Suburbs
+        suburbService.get().then(function(res){
+            $scope.Suburbs = res.data.slice(0,100);
+        });
+    }
+    function GetInstructorCode(){ // Get Suburbs
+        instructorService.getInstructorCode().then(function(res){
+           console.log(res);
+        });
+    }
 }]);

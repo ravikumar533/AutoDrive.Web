@@ -29,13 +29,13 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr ng-repeat="instructor in instructors">
-                                                            <td>{{instructor.FullName}}</td>
-                                                            <td>{{instructor.Email}}</td>
-                                                            <td>{{instructor.Mobile}}</td>
+                                                        <tr ng-repeat="instructor in Instructors">
+                                                            <td>{{instructor.firstName}}  {{instructor.lastName}}</td>
+                                                            <td>{{instructor.email}}</td>
+                                                            <td>{{instructor.mobile}}</td>
                                                             <td>
-                                                                <a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" uib-tooltip="Edit"><i class="fa fa-pencil"></i></a>
-                                                                <a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" uib-tooltip="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                <a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" uib-tooltip="Edit" ng-click="editRow($event,instructor.id)"><i class="fa fa-pencil"></i></a>
+                                                                <a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" uib-tooltip="Remove" ng-click="removeRow($event,instructor.id)"><i class="fa fa-times fa fa-white"></i></a>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -133,7 +133,7 @@
                                                 <div class="col-md-6">                                                    
                                                     <div class="form-group" >
                                                         <label for="form-field-select-1"> Choose Suburb </label>
-                                                        <div ng-dropdown-multiselect="" options="Suburbs" selected-model="SelectedSuburbModel" extra-settings="suburbDropListsettings" translation-texts="suburbTranslationTexts" ></div>                                                        
+                                                        <div ng-dropdown-multiselect="" options="Suburbs" selected-model="SelectedSuburbs" extra-settings="suburbDropListsettings" translation-texts="suburbTranslationTexts" ></div>                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">                                                    
