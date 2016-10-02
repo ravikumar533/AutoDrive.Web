@@ -8,13 +8,13 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorSe
 
     $scope.Instructors = [];
     $scope.SelectedInstructor =[];
-    $scope.instructorDropListsettings= {};
-    $scope.instructorTranslationTexts={};
+    $scope.instructorDropListsettings= DropDownSettings.Instructor;
+    $scope.instructorTranslationTexts= DropDownSettings.Instructor_Translation_text;
     
     $scope.Suburbs = [];
     $scope.SelectedSuburb =[];
-    $scope.suburbDropListsettings = {};
-    $scope.suburbTranslationTexts = {};
+    $scope.suburbDropListsettings = DropDownSettings.Suburb;
+    $scope.suburbTranslationTexts = DropDownSettings.Suburb_Translation_text;
 
 // Call Route Functions
     GetInstructors();
@@ -52,8 +52,7 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorSe
                     studentService.post($scope.studentModel).success(function (e) {
                         //noinspection JSUnresolvedFunction                     
                         $scope.studentModel = angular.copy($scope.master);
-                        form.$setPristine(true);
-                        areas = [];
+                        form.$setPristine(true);                        
                     });
                 }
                 else {

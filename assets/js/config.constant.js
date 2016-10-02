@@ -28,7 +28,7 @@ app.constant('DropDownSettings', {
         buttonDefaultText:'Select Area'
     },
     'Instructor':{
-        displayProp: 'instructorName', 
+        displayProp: 'firstName', 
         idProp: 'id', 
         externalIdProp: '',
         enableSearch: true,

@@ -4,7 +4,6 @@
 app.factory("areaService",[
     "$http","APPLICATIONURLS",
     function ($http,appurls) {
-        console.log(appurls);
         var uri = appurls.Api;
 
         function get(areaId) {
