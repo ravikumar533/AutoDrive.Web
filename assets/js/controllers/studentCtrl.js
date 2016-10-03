@@ -46,7 +46,10 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorSe
 
             } else {
                 //your code for submit                
-                $scope.studentModel.instructor = $scope.SelectedInstructor;
+                $scope.studentModel.instructor = {
+                    instructorName : $scope.SelectedInstructor.firstName,
+                        id : $scope.SelectedInstructor.id
+                    };
                 $scope.studentModel.suburbs = $scope.SelectedSuburb;
                 if(!$scope.studentModel.id) {
                     studentService.post($scope.studentModel).success(function (e) {
