@@ -1,4 +1,4 @@
-app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaService","suburbService" ,"DropDownSettings" ,function ($scope,$state, instructorService,areaService,suburbService,DropDownSettings) {
+app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructorService","areaService","suburbService" ,"DropDownSettings" ,function ($scope,$state,ngTableParams, instructorService,areaService,suburbService,DropDownSettings) {
     //Definitions 
     $scope.Instructors = [];
     $scope.Areas = [];
@@ -19,8 +19,7 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
     // Loadin Instructors , Areas and Suburbs; calling Functions
     GetInstructors();
     GetAreas();
-    GetSuburbs();
-    GetInstructorCode();
+    GetSuburbs();    
     // Create  / Edit Instructor
     $scope.master = $scope.instructorModel;    
     $scope.form = {
@@ -48,16 +47,15 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
                $scope.instructorModel.areas = $scope.SelectedAreas;
                if(!$scope.instructorModel.id) { // Create 
                     instructorService.post($scope.instructorModel).success(function (e) {
-                        $scope.instructorModel = angular.copy($scope.master); // Reset Form
                         form.$setPristine(true);
-                        areas = [];
+                       ResetForm(true);
                     });
                 }
                 else { // Update
                     instructorService.put($scope.instructorModel).success(function (e) {
                         //noinspection JSUnresolvedFunction
-                        $scope.instructorModel = angular.copy($scope.master);
                         form.$setPristine(true);
+                       ResetForm(true);
                     });
                 }
             }
@@ -65,12 +63,8 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
         },
         reset: function (form) {
             // Reset model
-            $scope.instructorModel ={};
-            $scope.instructorModel= angular.copy($scope.master);  
-            $scope.SelectedAreas = [];
-            $scope.SelectedSuburbs = [];         
             form.$setPristine(true);
-            $scope.form.$setValidity();
+          ResetForm(false);
         }
     };
     // Delete Instructor
@@ -84,6 +78,7 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
     //Edit Instructor
     $scope.editRow = function($event,instructorId){
         var data = $scope.Instructors;
+        angular.element($event.currentTarget).parents("tr:first").addClass('success'); // Add Color to select element
         angular.forEach(data,function(value,index){            
             if(value.id == instructorId) {
                 //var editRecord = value;
@@ -100,6 +95,15 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
     function GetInstructors(){// Get Instructors
         instructorService.get().success(function (res) {
             $scope.Instructors = res;
+            $scope.tableParams = new ngTableParams({
+                page: 1, // show first page
+                count: 5 // count per page
+            }, {
+                total: $scope.Instructors.length, // length of data
+                getData: function ($defer, params) {
+                    $defer.resolve($scope.Instructors.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
         });
     }
     function GetAreas(){ // Get Areas
@@ -112,9 +116,17 @@ app.controller('InstructorCtrl', ["$scope","$state", "instructorService","areaSe
             $scope.Suburbs = res.data.slice(0,100);
         });
     }
-    function GetInstructorCode(){ // Get Suburbs
-        instructorService.getInstructorCode().then(function(res){
-           console.log(res);
-        });
+    // Reset Form
+    function ResetForm(flag){
+        $scope.instructorModel ={};
+        $scope.instructorModel = angular.copy($scope.master); // Reset Form                       
+        $scope.SelectedSuburbs = [];
+        $scope.SelectedAreas=[];
+        
+        $scope.form.$setValidity();
+        angular.element("#InstructorsList").find("tr.success").removeClass("success");
+        if(flag){
+            GetInstructors();
+        }
     }
 }]);

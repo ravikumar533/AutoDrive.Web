@@ -3,9 +3,9 @@
  */
 
 app.factory("instructorService",[
-    "$http",
-    function ($http) {
-        var uri = "http://AutoDrive/api/";
+    "$http","APPLICATIONURLS",
+    function ($http,appurls) {
+        var uri = appurls.Api;
 
         function get(instructorId) {
 
@@ -43,21 +43,11 @@ app.factory("instructorService",[
             });
             
         }
-        function getInstructorCode(){
-            return $http({
-                method: "GET",
-                url: uri + "instructor/InstructorCode",
-                headers: { "Content-Type": "application/json" },
-
-            });
-        }
-        
         var instructorFactory = {
             get: get,
             put:put,
             deleteInstructor:deleteInstructor,
-            post:post,
-            getInstructorCode:getInstructorCode
+            post:post
         };
 
         return instructorFactory;
