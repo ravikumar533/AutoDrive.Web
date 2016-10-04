@@ -44,8 +44,8 @@ app.constant('DropDownSettings', {
         buttonDefaultText:'Select Instructor'
     },
     'Suburb':{
-        displayProp: 'SuburbName', 
-        idProp: 'PostalCode', 
+        displayProp: 'Display', 
+        idProp: 'PostCode', 
         externalIdProp: '',
         enableSearch: true,
         showCheckAll:false,

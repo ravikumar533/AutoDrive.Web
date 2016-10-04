@@ -20,7 +20,7 @@
                                                 <h5 class="over-title margin-bottom-15">Instructor List</h5>
                                                 <p>&nbsp;</p>
                                                  <table id="InstructorsList" ng-table="tableParams" class="table table-striped">
-                                                    <tr ng-repeat="instructor in Instructors">
+                                                    <tr ng-repeat="instructor in $data">
                                                         <td data-title="'Name'">{{instructor.firstName}}  {{instructor.lastName}}</td>
                                                         <td data-title="'Email'">{{instructor.email}}</td>
                                                         <td data-title="'Phone Number'">{{instructor.mobile}}</td>
@@ -90,11 +90,11 @@
                                               <div class="col-md-6"> 
                                                     <div class="form-group" ng-class="{'has-error':Form.dob.$dirty && Form.dob.$error.requiered, 'has-success':Form.dob.$valid}">
                                                             <label class="control-label-block">
-                                                                DOB                                                                
+                                                                dob                                                                
                                                             </label>
-                                                            <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" ng-required="true" close-text="Close" style="">
-                                                            <div uib-datepicker-popup-wrap="" ng-model="instructorModel.dOB" ng-change="dateSelection(date)" template-url="uib/template/datepickerPopup/popup.html" class="ng-not-empty ng-valid ng-valid-date-disabled" style="">
-                                                            </div>
+                                                            <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MM-yyyy" ng-model="instructorModel.dob" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" close-text="Close" style="">
+                                                           
+                                                            
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
