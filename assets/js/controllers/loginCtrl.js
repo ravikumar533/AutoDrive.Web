@@ -1,5 +1,5 @@
 
-app.controller('loginCtrl', ["$scope","$state","loginService",function ($scope,$state, loginService) {
+app.controller('loginCtrl', ["$scope","$state",'$localStorage',"loginService",function ($scope,$state,$localStorage, loginService) {
 
 
 $scope.master = $scope.loginModel;    
@@ -23,8 +23,21 @@ $scope.master = $scope.loginModel;
                 return;
 
             } else {
-                // Form Submition
-             
+                // Form Submition             
+             var formData = {
+                username: $scope.loginModel.email,
+                password: $scope.loginModel.password                
+            }
+ 
+            loginService.signin(formData, function(res) {
+                if (res.type == false) {                    
+                    alert(res.data)    
+                } else {                    
+                    $localStorage.token = res.access_token;                        
+                }
+            }, function(error) {                
+                $scope.error = error;
+            })
             }
 
         },
