@@ -110,12 +110,14 @@ app.constant('JS_REQUIRES', {
         'studentCtrl': 'assets/js/controllers/studentCtrl.js',
         'instructorCtrl': 'assets/js/controllers/instructorCtrl.js',
         'calendarCtrl':'assets/js/Controllers/calendarCtrl.js',
+        'loginCtrl':'assets/js/Controllers/loginCtrl.js',
         //*** Services
         'areaService': 'assets/js/services/areaService.js',
         'studentService':'assets/js/services/studentService.js',
         'instructorService':'assets/js/services/instructorService.js',
         'suburbService':'assets/js/services/suburbService.js',
-        'calendarService':'assets/js/services/calendarService.js'
+        'calendarService':'assets/js/services/calendarService.js',
+        'loginService':'assets/js/services/loginService.js',
     },
     //*** angularJS Modules
     modules: [{

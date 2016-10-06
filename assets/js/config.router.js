@@ -3,8 +3,8 @@
 /**
  * Config for the router
  */
-app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$ocLazyLoadProvider', 'JS_REQUIRES',
-function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $ocLazyLoadProvider, jsRequires) {
+app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$ocLazyLoadProvider', 'JS_REQUIRES','$httpProvider',
+function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $ocLazyLoadProvider, jsRequires,$httpProvider) {
 
     app.controller = $controllerProvider.register;
     app.directive = $compileProvider.directive;
@@ -22,6 +22,23 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         modules: jsRequires.modules
     });
 
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+            return {
+                'request': function (config) {
+                    config.headers = config.headers || {};
+                    if ($localStorage.token) {
+                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                    }
+                    return config;
+                },
+                'responseError': function(response) {
+                    if(response.status === 401 || response.status === 403) {
+                        $location.path('login/signin');
+                    }
+                    return $q.reject(response);
+                }
+            };
+        }]);
     // APPLICATION ROUTES
     // -----------------------------------
     // For any unmatched url, redirect to /app/dashboard
@@ -41,7 +58,26 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         ncyBreadcrumb: {
             label: 'Dashboard'
         }
-    }).state('app.pages', {
+    })
+    // Login routes
+	.state('login', {
+	    url: '/login',
+	    template: '<div ui-view class="fade-in-right-big smooth"></div>',
+	    abstract: true
+	}).state('login.signin', {
+	    url: '/signin',
+	    templateUrl: "assets/views/login_login.html",
+        resolve: loadSequence('loginService', 'loginCtrl')
+	}).state('login.forgot', {
+	    url: '/forgot',
+	    templateUrl: "assets/views/login_forgot.html"
+	}).state('login.registration', {
+	    url: '/registration',
+	    templateUrl: "assets/views/login_registration.html"
+	}).state('login.lockscreen', {
+	    url: '/lock',
+	    templateUrl: "assets/views/login_lock_screen.html"
+	}).state('app.pages', {
         url: '/pages',
         template: '<div ui-view class="fade-in-up"></div>',
         title: 'Pages',

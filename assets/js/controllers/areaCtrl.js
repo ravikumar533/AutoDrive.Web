@@ -9,6 +9,7 @@ app.controller('AreaCtrl', ["$scope", "areaService","$state", "SweetAlert", func
     $scope.form = {
 
         submit: function (form) {
+
             var firstError = null;
             if (form.$invalid) {
 
@@ -54,6 +55,7 @@ app.controller('AreaCtrl', ["$scope", "areaService","$state", "SweetAlert", func
     };
 
     $scope.editRow = function ($event,areaId) {
+        debugger;
         var data = $scope.Areas;
         angular.forEach(data,function(value,index){
             if(value.id == areaId) {
