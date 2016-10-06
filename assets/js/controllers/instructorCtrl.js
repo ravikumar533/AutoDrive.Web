@@ -19,8 +19,7 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
     // Date Options
     $scope.datepickerOptions = {
     
-    maxDate: new Date(2020, 5, 22),
-    minDate: new Date(),
+    maxDate: new Date(2020, 5, 22),    
     startingDay: 1
     };
 
@@ -78,11 +77,18 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
         },
         reset: function (form) {
             // Reset model
+            Console.log($scope.instructorModel);
             angular.element("#InstructorsList").find("tr.success").removeClass("success");
-            $scope.instructorModel ={};
-            $scope.instructorModel = angular.copy($scope.master); // Reset Form                       
-            $scope.SelectedSuburbs = [];
-            $scope.SelectedAreas=[];
+            $scope.instructorModel = null;
+            $scope.instructorModel = angular.copy($scope.master); // Reset Form
+           /* $scope.instructorModel = {
+            "id":"","instructorCode":"","firstName":"","lastName":"","gender":"","dob":null,"email":"","mobile":"","home":null,"address":null,
+            "suburb":{"id":null,"suburbName":"","postalCode":""},"areas":[{"id":"","areaCode":"","name":""}],"status":null
+            };*/
+
+            $scope.SelectedSuburbs = null;
+            $scope.SelectedAreas=null;
+            
             //form.$setValidity();
             form.$setPristine(true);
             

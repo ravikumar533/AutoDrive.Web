@@ -44,8 +44,8 @@ app.constant('DropDownSettings', {
         buttonDefaultText:'Select Instructor'
     },
     'Suburb':{
-        displayProp: 'Display', 
-        idProp: 'PostCode', 
+        displayProp: 'SuburbName', 
+        idProp: 'PostalCode', 
         externalIdProp: '',
         enableSearch: true,
         showCheckAll:false,
@@ -88,8 +88,7 @@ app.constant('JS_REQUIRES', {
         'toasterCtrl': 'assets/js/controllers/toasterCtrl.js',
         'sweetAlertCtrl': 'assets/js/controllers/sweetAlertCtrl.js',
         'mapsCtrl': 'assets/js/controllers/mapsCtrl.js',
-        'chartsCtrl': 'assets/js/controllers/chartsCtrl.js',
-        'calendarCtrl': 'assets/js/controllers/calendarCtrl.js',
+        'chartsCtrl': 'assets/js/controllers/chartsCtrl.js',        
         'nestableCtrl': 'assets/js/controllers/nestableCtrl.js',
         'validationCtrl': ['assets/js/controllers/validationCtrl.js'],
         'userCtrl': ['assets/js/controllers/userCtrl.js'],
@@ -110,11 +109,13 @@ app.constant('JS_REQUIRES', {
         'areaCtrl': 'assets/js/controllers/areaCtrl.js',
         'studentCtrl': 'assets/js/controllers/studentCtrl.js',
         'instructorCtrl': 'assets/js/controllers/instructorCtrl.js',
+        'calendarCtrl':'assets/js/Controllers/calendarCtrl.js',
         //*** Services
         'areaService': 'assets/js/services/areaService.js',
         'studentService':'assets/js/services/studentService.js',
         'instructorService':'assets/js/services/instructorService.js',
-        'suburbService':'assets/js/services/suburbService.js'
+        'suburbService':'assets/js/services/suburbService.js',
+        'calendarService':'assets/js/services/calendarService.js'
     },
     //*** angularJS Modules
     modules: [{

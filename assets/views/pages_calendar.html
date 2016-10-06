@@ -92,6 +92,7 @@
                         <br>
                         <!-- start: EDIT EVENT TEMPLATE -->
                         <script type="text/ng-template" id="calendarEvent.html">
+                           <form class="panel " role="form" name="Form"   novalidate ng-submit="form.submit(Form)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>
@@ -112,8 +113,7 @@
                                      <label for="form-field-select-2"> Assign Student  <span class="symbol required"></span> </label>
                                       <select name="student" ng-model="event.student" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
                                         ng-options="obj.studentName for obj in students">
-                                      </select> 
-                                      {{event.student}}
+                                      </select>
                                      <!--<select ng-change="ChangeStudent()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="student"  ng-model="event.student._id">
                                          <option ng-value="student._id" ng-repeat="student in students">{{student.studentCode + "-" + student.studentName}}</option>
                                      </select>-->  
@@ -165,13 +165,10 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger btn-o" ng-click="deleteEvent(event)">
-                            Delete
-                        </button>
-                        <button class="btn btn-primary btn-o" ng-click="cancel()">
-                            Ok
-                        </button>
+                         <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
+                         <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>  
                     </div>
+                    </form>
                     </script>
                     <!-- end: EDIT EVENT TEMPLATE -->
                 </div>

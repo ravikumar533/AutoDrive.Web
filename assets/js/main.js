@@ -1,4 +1,4 @@
-var app = angular.module('app', ['packet']);
+var app = angular.module('app', ['Autogear']);
 app.run(['$rootScope', '$state', '$stateParams',
 function ($rootScope, $state, $stateParams) {
 
@@ -12,8 +12,8 @@ function ($rootScope, $state, $stateParams) {
     // GLOBAL APP SCOPE
     // set below basic information
     $rootScope.app = {
-        name: 'Packet', // name of your project
-        author: 'ClipTheme', // author's name or company name
+        name: 'Autogear', // name of your project
+        author: 'Autogear', // author's name or company name
         description: 'Angular Bootstrap Admin Template', // brief description
         version: '1.0', // current version
         year: ((new Date()).getFullYear()), // automatic current year (for copyright information)
@@ -31,7 +31,7 @@ function ($rootScope, $state, $stateParams) {
             isFooterFixed: false, // true if you want to initialize the template with fixed footer
             isBoxedPage: false, // true if you want to initialize the template with boxed layout
             theme: 'lyt6-theme-1', // indicate the theme chosen for your project
-            logo: 'assets/images/logo.png', // relative path of the project logo
+            logo: 'assets/images/site-logo1.png', // relative path of the project logo
             logoCollapsed: 'assets/images/logo-collapsed.png' // relative path of the collapsed logo
         },
         layout: ''

@@ -90,7 +90,7 @@
                                               <div class="col-md-6"> 
                                                     <div class="form-group" ng-class="{'has-error':Form.dob.$dirty && Form.dob.$error.requiered, 'has-success':Form.dob.$valid}">
                                                             <label class="control-label-block">
-                                                                dob                                                                
+                                                                DOB                                                                
                                                             </label>
                                                             <input type="text" class="form-control ng-pristine ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-valid-date ng-touched" uib-datepicker-popup="dd-MM-yyyy" ng-model="instructorModel.dob" is-open="inputopened" ng-init="inputopened = false" ng-click="inputopened = !inputopened" datepicker-options="datepickerOptions" close-text="Close" style="">
                                                            
@@ -135,7 +135,9 @@
                                             </div>                                            
                                              <div class="form-group">                                            
                                                 <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
-                                                <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>                                            
+                                                <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>   
+                                                {{instructorModel}}   
+                                                                                   
                                             </div>
                                         </form>
                                     </div>

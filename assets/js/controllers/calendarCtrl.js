@@ -2,7 +2,7 @@
 /**
  * Controller of the angularBootstrapCalendarApp
 */
-app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", function ($scope, $aside, moment, SweetAlert) {
+app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","calendarService", function ($scope, $aside, moment, SweetAlert,calendarService) {
 
 
     var vm = this;
@@ -10,7 +10,10 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
-
+   // $scope.students = [];
+    //$scope.instructors = [];
+    GetStudents();
+    GetInstructors();
     $scope.events = [
 	  {
           _id: '123456789',
@@ -32,30 +35,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
           studentMobile:'041204765',
           testStatus:'Passed'
 	  },
-	  {
-	      title: 'AngularJS Seminar',
-	      type: 'off-site-work',
-	      startsAt: new Date(y, m, 8, 10, 30),
-	      endsAt: new Date(y, m, 9, 18, 30)
-	  },
-      {
-          title: 'Event 1',
-          type: 'job',
-          startsAt: new Date(y, m, d - 5),
-          endsAt: new Date(y, m, d - 2)
-      },
-      {
-          title: 'Event 2',
-          type: 'cancelled',
-          startsAt: new Date(y, m, d - 3, 16, 0),
-          endsAt: new Date(y, m, d - 3, 18, 0)
-      },
-      {
-          title: 'This is a really long event title',
-          type: 'to-do',
-          startsAt: new Date(y, m, d + 1, 19, 0),
-          endsAt: new Date(y, m, d + 1, 22, 30)
-      },
+	  
     ];
 
     $scope.calendarView = 'month';
@@ -70,7 +50,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
             controller: function ($scope, $uibModalInstance) {
                 $scope.$modalInstance = $uibModalInstance;
                 $scope.action = action;
-             //   $scope.event = event;
+                $scope.event = event;
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -108,7 +88,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
                                         instructorName:'Instructor_nam3'
                                     }
                                 ];
-                                $scope.event.student = $scope.students[2];
+                //$scope.event.student = $scope.students[2];
                  $scope.startOptions = {
 					showWeeks : false,
 					startingDay : 1,
@@ -216,5 +196,85 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert", func
 		$scope.endOpened = false;
 		$scope.startOpened = !$scope.startOpened;
 	};
+
+    function GetInstructors()
+    {
+        $scope.instructors = [
+                                    {
+                                        _id:'2342342342343',
+                                        instructorName:'Instructor_name1'
+                                    },
+                                    {
+                                        _id:'2342342342342',
+                                        instructorName:'Instructor_name2'
+                                    },
+                                    {
+                                        _id:'2342342342as2',
+                                        instructorName:'Instructor_nam3'
+                                    }
+                                ];
+    };
+    function GetStudents()
+    {
+      return  [{
+                                    _id:'123123123123',
+                                    studentName:'StudentName1',
+                                    studentCode:'SN-101'
+                                },
+                                {
+                                    _id:'12312312312',
+                                    studentName:"StudentName2",
+                                    studentCode:'SN-102'
+                                },
+                                {
+                                    _id:'12312312282',
+                                    studentName:"StudentName3",
+                                    studentCode:'SN-103'
+                                }];
+    };
+
+    $scope.form = {
+        submit: function (form) {    // Form Submit 
+            var firstError = null;
+            if (form.$invalid) {
+
+                var field = null, firstError = null;
+                for (field in form) {
+                    if (field[0] != '$') {
+                        if (firstError === null && !form[field].$valid) {
+                            firstError = form[field].$name;
+                        }
+                        if (form[field].$pristine) {
+                            form[field].$dirty = true;
+                        }
+                    }
+                }
+                angular.element('.ng-invalid[name=' + firstError + ']').focus();
+                return;
+
+            } else {
+                // Form Submition
+               if(!$scope.event.id) { // Create 
+                    calendarService.post($scope.event).success(function (e) {
+                        form.$setPristine(true);
+                       //ResetForm(true);
+                    });
+                }
+                else { // Update
+                    calendarService.put($scope.event).success(function (e) {
+                        //noinspection JSUnresolvedFunction
+                        form.$setPristine(true);
+                       //ResetForm(true);
+                    });
+                }
+            }
+
+        },
+        reset: function (form) {
+            // Reset model
+            form.$setPristine(true);
+         // ResetForm(false);
+        }
+    };
 
 }]);

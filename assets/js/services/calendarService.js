@@ -5,13 +5,13 @@
 app.factory("calendarService",[
     "$http",
     function ($http) {
-        var uri = "http://AutoDrive/api/";
+        var uri = "http://testing/api/";
 
         function get() {
 
             return $http({
                 method: "GET",
-                url: uri + "calendar",
+                url: uri + "booking",
                 headers: { "Content-Type": "application/json" }
             });
         }
@@ -19,7 +19,7 @@ app.factory("calendarService",[
         function put(calendar) {
             return $http({
                 method: "PUT",
-                url: uri + "calendar/",
+                url: uri + "booking/",
                 headers: { "Content-Type": "application/json" },
                 data:calendar
             });
@@ -28,7 +28,7 @@ app.factory("calendarService",[
         function post(calendar) {
             return $http({
                 method: "POST",
-                url: uri + "calendar/",
+                url: uri + "booking/",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify(calendar)
             });
@@ -37,7 +37,7 @@ app.factory("calendarService",[
         function deleteEvent(eventId) {
             return $http({
                 method: "DELETE",
-                url: uri + "calendar/"+eventId,
+                url: uri + "booking/"+eventId,
                 headers: { "Content-Type": "application/json" },
 
             });
