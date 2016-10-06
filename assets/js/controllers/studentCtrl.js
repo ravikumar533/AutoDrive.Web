@@ -1,7 +1,7 @@
 /**
  * Created by ravik_000 on 03-09-2016.
  */
-app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorService","suburbService" ,"DropDownSettings", function ($scope,$state, studentService,instructorService,suburbService,DropDownSettings) {
+app.controller('StudentCtrl', ["$scope","$state","ngTableParams", "studentService","instructorService","suburbService" ,"DropDownSettings", function ($scope,$state,ngTableParams, studentService,instructorService,suburbService,DropDownSettings) {
     
     //Definition
     $scope.Students = [];
@@ -87,10 +87,12 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorSe
     // Edit Student
     $scope.editRow = function($event,studentId){
         var data = $scope.Students;
+         angular.element("#StudentsList").find("tr.success").removeClass("success");
+        angular.element($event.currentTarget).parents("tr:first").addClass('success'); // Add Color to select element
         angular.forEach(data,function(value,index){            
             if(value.id == studentId) {
                 //var editRecord = value;
-                $scope.instructorModel = value;
+                $scope.studentModel = value;
                 $scope.SelectedInstructor = value.instructor;
                 $scope.SelectedSuburb = {
                     PostalCode : value.suburb.postalCode,
@@ -103,6 +105,15 @@ app.controller('StudentCtrl', ["$scope","$state", "studentService","instructorSe
     function GetStudents(){
         studentService.get().success(function(res){
             $scope.Students = res;
+            $scope.tableParams = new ngTableParams({
+                page: 1, // show first page
+                count: 5 // count per page
+            }, {
+                total: $scope.Students.length, // length of data
+                getData: function ($defer, params) {
+                    $defer.resolve($scope.Students.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
         });
     }
     function GetInstructors(){// Get Instructors

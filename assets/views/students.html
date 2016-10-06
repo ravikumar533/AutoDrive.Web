@@ -23,27 +23,15 @@
                                                   <div class="panel-body">
                                                       <h5 class="over-title margin-bottom-15">Student List</h5>
                                                       <p>&nbsp;</p>
-                                                      <table class="table table-hover">
-                                                          <thead>
-                                                              <tr>
-                                                                  <th>Name</th>
-                                                                  <th>Email</th>
-                                                                  <th>Phone Number</th>
-                                                                  <th>&nbsp;</th>
-                                                              </tr>
-                                                          </thead>
-                                                          <tbody>
-                                                              <tr ng-repeat="student in Students">
-                                                                 
-                                                            <td>{{student.firstName}}  {{student.lastName}}</td>
-                                                            <td>{{student.email}}</td>
-                                                            <td>{{student.mobile}}</td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" uib-tooltip="Edit" ng-click="editRow($event,student.id)"><i class="fa fa-pencil"></i></a>
-                                                                <a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" uib-tooltip="Remove" ng-click="removeRow($event,student.id)"><i class="fa fa-times fa fa-white"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                          </tbody>
+                                                      <table class="table table-hover" ng-table="tableParams" id ="StudentsList">
+                                                          <tr ng-repeat="student in $data">
+                                                        <td data-title="'Name'">{{student.firstName}}  {{student.lastName}}</td>
+                                                        <td data-title="'Email'">{{student.email}}</td>
+                                                        <td data-title="'Phone Number'">{{student.mobile}}</td>
+                                                        <td data-title="''"><a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" uib-tooltip="Edit" ng-click="editRow($event,student.id)"><i class="fa fa-pencil"></i></a>
+                                                                <a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" uib-tooltip="Remove" ng-click="removeRow($event,student.id)"><i class="fa fa-times fa fa-white"></i></a></td>
+                                                    </tr>
+                                                         
                                                       </table>
                                                   </div>
                                               </div>
