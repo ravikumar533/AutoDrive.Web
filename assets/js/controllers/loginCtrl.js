@@ -1,68 +1,38 @@
-'use strict';
- 
-/* Controllers */
- 
-app.controller('loginCtrl', ['$scope', '$location', '$localStorage', 'areaService', function($scope, $location, $localStorage, areaService) {
+
+app.controller('loginCtrl', ["$scope","$state","loginService",function ($scope,$state, loginService) {
+
+
+$scope.master = $scope.loginModel;    
     $scope.form = {
-        submit : function(form)
-        {
-            debugger;
+        submit: function (form) {    // Form Submit 
+            var firstError = null;
+            if (form.$invalid) {
+
+                var field = null, firstError = null;
+                for (field in form) {
+                    if (field[0] != '$') {
+                        if (firstError === null && !form[field].$valid) {
+                            firstError = form[field].$name;
+                        }
+                        if (form[field].$pristine) {
+                            form[field].$dirty = true;
+                        }
+                    }
+                }
+                angular.element('.ng-invalid[name=' + firstError + ']').focus();
+                return;
+
+            } else {
+                // Form Submition
+             
+            }
+
+        },
+        reset: function (form) {           
+            $scope.loginModel = null;
+            $scope.loginModel = angular.copy($scope.master); // Reset Form           
+            form.$setPristine(true);
         }
-    }
-        $scope.signin = function() {
-            debugger;
-            alert("asdasdsa");
-            var formData = {
-                username: $scope.email,
-                password: $scope.password,
-                grant_type:'password'
-            }
-            $scope.test = "testing";
-            areaService.signin(formData, function(res) {
-               alert("test");
-                if (res.type == false) {
-                    alert(res.data)    
-                } else {
-                    $localStorage.token = res.data.token;
-                    window.location = "/";    
-                }
-            }, function() {
-                $rootScope.error = 'Failed to signin';
-            })
-        };
- 
-        $scope.signup = function() {
-            var formData = {
-                email: $scope.email,
-                password: $scope.password
-            }
- 
-            areaService.save(formData, function(res) {
-                if (res.type == false) {
-                    alert(res.data)
-                } else {
-                    $localStorage.token = res.data.token;
-                    window.location = "/"   
-                }
-            }, function() {
-                $rootScope.error = 'Failed to signup';
-            })
-        };
- 
-        $scope.me = function() {
-            areaService.me(function(res) {
-                $scope.myDetails = res;
-            }, function() {
-                $rootScope.error = 'Failed to fetch details';
-            })
-        };
- 
-        $scope.logout = function() {
-            areaService.logout(function() {
-                window.location = "/"
-            }, function() {
-                alert("Failed to logout!");
-            });
-        };
-        $scope.token = $localStorage.token;
-    }])
+    };
+}]);
+
