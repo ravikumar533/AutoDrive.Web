@@ -3,10 +3,10 @@
  */
 
 app.factory("calendarService",[
-    "$http",
-    function ($http) {
-        var uri = "http://testing/api/";
-
+      "$http","APPLICATIONURLS",
+    function ($http,appurls) {
+        var uri = appurls.Api;
+       
         function get() {
 
             return $http({

@@ -81,7 +81,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         url: '/calendar',
         title: 'Calendar',
         templateUrl: "assets/views/pages_calendar.html",
-        resolve: loadSequence('mwl.calendar','ngTable','calendarService','areaService','suburbService', 'calendarCtrl')
+        resolve: loadSequence('mwl.calendar','ngTable','instructorService','calendarService','areaService','suburbService', 'calendarCtrl')
     });    
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
     function loadSequence() {

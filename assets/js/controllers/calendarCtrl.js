@@ -2,7 +2,7 @@
 /**
  * Controller of the angularBootstrapCalendarApp
 */
-app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","calendarService", function ($scope, $aside, moment, SweetAlert,calendarService) {
+app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","calendarService","instructorService", function ($scope, $aside, moment, SweetAlert,calendarService,instructorService) {
 
 
     var vm = this;
@@ -14,6 +14,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
     //$scope.instructors = [];
     GetStudents();
     GetInstructors();
+    //GetEvents();
     $scope.events = [
 	  {
           _id: '123456789',
@@ -50,7 +51,6 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
             controller: function ($scope, $uibModalInstance) {
                 $scope.$modalInstance = $uibModalInstance;
                 $scope.action = action;
-                $scope.event = event;
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -59,35 +59,51 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
                 };
                 $scope.maxDate = new Date(2020, 5, 22);
 				$scope.minDate = new Date(1970, 12, 31);
-                $scope.students = [{
-                                    _id:'123123123123',
-                                    studentName:'StudentName1',
-                                    studentCode:'SN-101'
-                                },
-                                {
-                                    _id:'12312312312',
-                                    studentName:"StudentName2",
-                                    studentCode:'SN-102'
-                                },
-                                {
-                                    _id:'12312312282',
-                                    studentName:"StudentName3",
-                                    studentCode:'SN-103'
-                                }];
-                $scope.instructors = [
-                                    {
-                                        _id:'2342342342343',
-                                        instructorName:'Instructor_name1'
-                                    },
-                                    {
-                                        _id:'2342342342342',
-                                        instructorName:'Instructor_name2'
-                                    },
-                                    {
-                                        _id:'2342342342as2',
-                                        instructorName:'Instructor_nam3'
+                $scope.eventModel = event; 
+                $scope.form = {
+                    submit: function (form) {    // Form Submit 
+                        var firstError = null;
+                        if (form.$invalid) {
+
+                            var field = null, firstError = null;
+                            for (field in form) {
+                                if (field[0] != '$') {
+                                    if (firstError === null && !form[field].$valid) {
+                                        firstError = form[field].$name;
                                     }
-                                ];
+                                    if (form[field].$pristine) {
+                                        form[field].$dirty = true;
+                                    }
+                                }
+                            }
+                            angular.element('.ng-invalid[name=' + firstError + ']').focus();
+                            return;
+
+                        } else {
+                            // Form Submition
+                        if(!$scope.eventModel.id) { // Create 
+                                calendarService.post($scope.eventModel).success(function (e) {
+                                    form.$setPristine(true);
+                                //ResetForm(true);
+                                });
+                            }
+                            else { // Update
+                                calendarService.put($scope.eventModel).success(function (e) {
+                                    //noinspection JSUnresolvedFunction
+                                    form.$setPristine(true);
+                                //ResetForm(true);
+                                });
+                            }
+                        }
+
+                    },
+                    reset: function (form) {
+                        // Reset model
+                        form.$setPristine(true);
+                    // ResetForm(false);
+                    }
+                };
+
                 //$scope.event.student = $scope.students[2];
                  $scope.startOptions = {
 					showWeeks : false,
@@ -199,82 +215,11 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
 
     function GetInstructors()
     {
-        $scope.instructors = [
-                                    {
-                                        _id:'2342342342343',
-                                        instructorName:'Instructor_name1'
-                                    },
-                                    {
-                                        _id:'2342342342342',
-                                        instructorName:'Instructor_name2'
-                                    },
-                                    {
-                                        _id:'2342342342as2',
-                                        instructorName:'Instructor_nam3'
-                                    }
-                                ];
+       
     };
     function GetStudents()
     {
-      return  [{
-                                    _id:'123123123123',
-                                    studentName:'StudentName1',
-                                    studentCode:'SN-101'
-                                },
-                                {
-                                    _id:'12312312312',
-                                    studentName:"StudentName2",
-                                    studentCode:'SN-102'
-                                },
-                                {
-                                    _id:'12312312282',
-                                    studentName:"StudentName3",
-                                    studentCode:'SN-103'
-                                }];
+      
     };
-
-    $scope.form = {
-        submit: function (form) {    // Form Submit 
-            var firstError = null;
-            if (form.$invalid) {
-
-                var field = null, firstError = null;
-                for (field in form) {
-                    if (field[0] != '$') {
-                        if (firstError === null && !form[field].$valid) {
-                            firstError = form[field].$name;
-                        }
-                        if (form[field].$pristine) {
-                            form[field].$dirty = true;
-                        }
-                    }
-                }
-                angular.element('.ng-invalid[name=' + firstError + ']').focus();
-                return;
-
-            } else {
-                // Form Submition
-               if(!$scope.event.id) { // Create 
-                    calendarService.post($scope.event).success(function (e) {
-                        form.$setPristine(true);
-                       //ResetForm(true);
-                    });
-                }
-                else { // Update
-                    calendarService.put($scope.event).success(function (e) {
-                        //noinspection JSUnresolvedFunction
-                        form.$setPristine(true);
-                       //ResetForm(true);
-                    });
-                }
-            }
-
-        },
-        reset: function (form) {
-            // Reset model
-            form.$setPristine(true);
-         // ResetForm(false);
-        }
-    };
-
+   
 }]);

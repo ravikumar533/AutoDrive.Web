@@ -12,7 +12,7 @@
             <div class="panel panel-white">
                 <div class="panel-body">
                     <!-- /// controller:  'CalendarCtrl' -  localtion: assets/js/controllers/calendarCtrl.js /// -->
-                    <div ng-controller="CalendarCtrl" id="demo">
+                    <div id="demo">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="margin-bottom-30">
@@ -101,17 +101,16 @@
                                 </div>
                                 <div class="form-group">
                                      <label for="form-field-select-2"> Select Instructor  <span class="symbol required"></span> </label>
-                                     <select name="instructor" ng-model="event.instructor" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
+                                     <select name="instructor" ng-model="eventModel.instructor" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
                                         ng-options="obj as obj.instructorName for obj in instructors">
-                                      </select> 
-                                      {{event.instructor}}
+                                      </select>                                      
                                      <!--<select ng-change="ChangeInstructor()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="instructor"  ng-model="event.instructor._id">
                                          <option ng-value="instructor._id" ng-repeat="instructor in instructors">{{instructor.instructorName}}</option>
                                      </select>-->
                                 </div>
                                 <div class="form-group">
                                      <label for="form-field-select-2"> Assign Student  <span class="symbol required"></span> </label>
-                                      <select name="student" ng-model="event.student" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
+                                      <select name="student" ng-model="eventModel.student" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"                   
                                         ng-options="obj.studentName for obj in students">
                                       </select>
                                      <!--<select ng-change="ChangeStudent()" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" name="student"  ng-model="event.student._id">
@@ -123,7 +122,7 @@
                                         Lesson Date
                                     </label>
                                     <span class="input-icon">
-                                        <input type="text" placeholder="Select Lesson/Test Date" class="form-control underline" ng-click="startOpen = !startOpen" show-weeks="false" uib-datepicker-popup="fullDate" ng-model="event.lessonDate" is-open="startOpen" ng-init="startOpen = false" close-text="Close" />
+                                        <input type="text" placeholder="Select Lesson/Test Date" class="form-control underline" ng-click="startOpen = !startOpen" show-weeks="false" uib-datepicker-popup="fullDate" ng-model="eventModel.lessonDate" is-open="startOpen" ng-init="startOpen = false" close-text="Close" />
                                         <i class="ti-calendar"></i>
                                     </span>                                    
                                 </div>
@@ -131,45 +130,45 @@
                                     <label>
                                         Start Time
                                     </label>                                    
-                                    <uib-timepicker ng-model="event.startsAt" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
+                                    <uib-timepicker ng-model="eventModel.startsAt" show-meridian="true" ng-show="!eventModel.allDay"></uib-timepicker>
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         End Time
                                     </label>                                    
-                                    <uib-timepicker ng-model="event.endsAt" show-meridian="true" ng-show="!event.allDay"></uib-timepicker>
+                                    <uib-timepicker ng-model="eventModel.endsAt" show-meridian="true" ng-show="!eventModel.allDay"></uib-timepicker>
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         Student Mobile Number
                                     </label>                                    
-                                    <input type="text" placeholder="Student Mobile-number" class="form-control" name="mobile" ng-model="event.studentMobile" >
+                                    <input type="text" placeholder="Student Mobile-number" class="form-control" name="mobile" ng-model="eventModel.studentMobile" >
                                 </div>
                                 <div class="form-group">
                                     <label>
                                         Student Pickup Location
                                     </label>                                    
-                                    <input type="text" placeholder="Student Pickup Location" class="form-control" name="location" ng-model="event.pickupLocation" >
+                                    <input type="text" placeholder="Student Pickup Location" class="form-control" name="location" ng-model="eventModel.pickupLocation" >
                                 </div>
-                                <div class="form-group" ng-class="{'has-error':Form.type.$dirty && Form.gentypeder.$invalid, 'has-success':Form.type.$valid}">
+                                <div class="form-group" ng-class="{'has-error':Form.type.$dirty && Form.type.$invalid, 'has-success':Form.type.$valid}">
                                     <label class="control-label block"> Type <span class="symbol required"></span> </label>
-                                                <div class="clip-radio radio-primary">
-                                                            <input type="radio" id="wd-lesson" name="type" value="female" ng-model="event.type" required>
-                                                            <label for="wd-lesson"> Lesson </label>
-                                                            <input type="radio" id="wd-test" name="type" value="male" ng-model="event.type" required>
-                                                            <label for="wd-test"> Test </label>
-                                                        </div>
-                                                        <span class="error text-small block" ng-if="Form.type.$dirty && Form.type.$error.required">Type is required.</span>                                                        
+                                    <div class="clip-radio radio-primary">
+                                        <input type="radio" id="wd-lesson" name="type" value="female" ng-model="eventModel.type" required>
+                                        <label for="wd-lesson"> Lesson </label>
+                                        <input type="radio" id="wd-test" name="type" value="male" ng-model="eventModel.type" required>
+                                        <label for="wd-test"> Test </label>
+                                    </div>
+                                    <span class="error text-small block" ng-if="Form.type.$dirty && Form.type.$error.required">Type is required.</span>                                                        
                                 </div>
-                                
+                                 <div class="form-group" >
+                                    <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
+                                    <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>  
+                                </div>
+                                </form>
+                                </script>
                             </div>
                     </div>
-                    <div class="modal-footer">
-                         <button type="submit" class="btn btn-wide btn-o btn-success">Submit</button>
-                         <button type="reset" class="btn btn-wide  btn-o btn-danger">Reset</button>  
-                    </div>
-                    </form>
-                    </script>
+                   
                     <!-- end: EDIT EVENT TEMPLATE -->
                 </div>
             </div>
