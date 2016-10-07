@@ -118,6 +118,7 @@ app.constant('JS_REQUIRES', {
         'suburbService':'assets/js/services/suburbService.js',
         'calendarService':'assets/js/services/calendarService.js',
         'loginService':'assets/js/services/loginService.js',
+        'authInterceptorService' : 'assets/js/services/authService.js'
     },
     //*** angularJS Modules
     modules: [{

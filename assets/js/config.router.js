@@ -3,8 +3,8 @@
 /**
  * Config for the router
  */
-app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$ocLazyLoadProvider', 'JS_REQUIRES','$httpProvider',
-function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $ocLazyLoadProvider, jsRequires,$httpProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$ocLazyLoadProvider', 'JS_REQUIRES',
+function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $ocLazyLoadProvider, jsRequires) {
 
     app.controller = $controllerProvider.register;
     app.directive = $compileProvider.directive;
@@ -12,8 +12,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     app.factory = $provide.factory;
     app.service = $provide.service;
     app.constant = $provide.constant;
-    app.value = $provide.value;
-
+    app.value = $provide.value;    
     // LAZY MODULES
 
     $ocLazyLoadProvider.config({
@@ -21,28 +20,10 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         events: true,
         modules: jsRequires.modules
     });
-
-    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
-            return {
-                'request': function (config) {
-                    config.headers = config.headers || {};
-                    if ($localStorage.token) {
-                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
-                    }
-                    return config;
-                },
-                'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
-                        $location.path('login/signin');
-                    }
-                    return $q.reject(response);
-                }
-            };
-        }]);
     // APPLICATION ROUTES
     // -----------------------------------
     // For any unmatched url, redirect to /app/dashboard
-    $urlRouterProvider.otherwise("/app/dashboard");
+    $urlRouterProvider.otherwise("/login/signin");
     //
     // Set up the states
     $stateProvider.state('app', {
@@ -136,4 +117,35 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
 			}]
         };
     }
+}]);
+app.factory('authInterceptorService', ['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+ 
+    var authInterceptorServiceFactory = {};
+ 
+    var _request = function (config) {        
+        config.headers = config.headers || {};
+ 
+        var token = $localStorage.token;
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token;
+        }
+ 
+        return config;
+    }
+ 
+    var _responseError = function (rejection) {
+        if (rejection.status === 401) {
+            $location.path('/login/signin');
+        }
+        return $q.reject(rejection);
+    }
+ 
+    authInterceptorServiceFactory.request = _request;
+    authInterceptorServiceFactory.responseError = _responseError;
+ 
+    return authInterceptorServiceFactory;
+}]);
+app.config(['$httpProvider',
+function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
 }]);

@@ -1,10 +1,11 @@
 
-app.controller('loginCtrl', ["$scope","$state",'$localStorage',"loginService",function ($scope,$state,$localStorage, loginService) {
+app.controller('loginCtrl', ["$scope","$state",'$localStorage','$location',"loginService",function ($scope,$state,$localStorage,$location, loginService) {
 
 
 $scope.master = $scope.loginModel;    
     $scope.form = {
-        submit: function (form) {    // Form Submit 
+        submit: function (form) {    
+            // Form Submit            
             var firstError = null;
             if (form.$invalid) {
 
@@ -28,12 +29,23 @@ $scope.master = $scope.loginModel;
                 username: $scope.loginModel.email,
                 password: $scope.loginModel.password                
             }
- 
-            loginService.signin(formData, function(res) {
+           /* $location.path('/app/dashboard'); 
+            $localStorage.user = {
+                username : 'LoggedInUser',
+                instructorId:'INS1001',
+                role:'admin'
+            };*/
+            loginService.signin(formData, function(res) {                
                 if (res.type == false) {                    
                     alert(res.data)    
                 } else {                    
-                    $localStorage.token = res.access_token;                        
+                    $localStorage.token = res.access_token;  
+                    $localStorage.user = {
+                        username : 'LoggedInUser',
+                        instructorId:'INS1001',
+                        role:'admin'
+                    }; 
+                    $location.path('/app/dashboard');                   
                 }
             }, function(error) {                
                 $scope.error = error;

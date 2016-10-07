@@ -1,9 +1,25 @@
 'use strict';
-app.directive('touchspin', function () {
+app.service('authService',['$localStorage' , function($localStorage){
+
+  /*var user = {};
+  user.role = 'user';*/
+  return{
+    getUser: function(){        
+		debugger;
+      return $localStorage.user;
+    },
+    generateRoleData: function(){
+      /*this is resolved before the router loads the view and model*/
+      /*...*/
+    }
+  }
+}]);
+
+app.directive('touchspin', function (authService) {
     return {
         restrict: 'EA',
-        link: function (scope, elem, attr) {
-            var tsOptions = [
+        link: function () {
+           /* var tsOptions = [
 				'initval',
 				'min',
 				'max',
@@ -33,7 +49,22 @@ app.directive('touchspin', function () {
                     options[opt] = attr[opt];
                 }
             }
-            elem.TouchSpin(options);
-        }
+            elem.TouchSpin(options);*/
+        },
+		compile:  function(element, attr, linker){			
+			var accessDenied = true;
+			var user = authService.getUser();
+			
+			var attributes = attr.access.split(" ");
+			for(var i in attributes){
+				if(user.role == attributes[i]){
+					accessDenied = false;
+				}
+			}
+			if(accessDenied){
+				element.children().remove();
+				element.remove();			
+			}
+		}
     };
 });
