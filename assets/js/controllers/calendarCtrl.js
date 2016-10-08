@@ -18,29 +18,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
     GetStudents();
     GetInstructors();
     GetEvents();
-    // $scope.events = [
-	//   {
-    //       _id: '123456789',
-    //       title: 'Student_Name',
-    //       lessonDate:new Date(y, m, 8, 10, 30),
-	//       startsAt: new Date(y, m, 8, 10, 30),
-	//       endsAt: new Date(y, m, 8, 10, 30),
-	//       type: 'lesson',
-	//       student:{
-    //           _id:'12312312312',
-    //           studentName:"StudentName2",
-    //           studentCode:'SN-102'
-    //       },
-    //       instructor:{
-    //           _id:'2342342342342',
-    //           instructorName:'Instructor_name2'
-    //       },
-    //       pickupLocation:'pickup location test',
-    //       studentMobile:'041204765',
-    //       testStatus:'Passed'
-	//   },
-	  
-    // ];
+  
 
     $scope.calendarView = 'week';
     $scope.calendarDate = new Date();

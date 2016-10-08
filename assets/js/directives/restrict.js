@@ -11,7 +11,7 @@
 			// alert('ergo sum!');
 		},
 		compile:  function(element, attr, linker){
-            debugger;
+            
 			var accessDenied = true;
 			var user = authService.getUser();
 			

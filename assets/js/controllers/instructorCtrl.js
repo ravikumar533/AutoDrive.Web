@@ -143,7 +143,8 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
     }
     function GetSuburbs(){ // Get Suburbs
         suburbService.get("2067").then(function(res){
-            $scope.Suburbs = res.slice(0,100);
+            console.log(res);
+            $scope.Suburbs = res.data;
         });
     }
     // Reset Form

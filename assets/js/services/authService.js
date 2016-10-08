@@ -4,7 +4,7 @@ app.service('authService',['$localStorage' , function($localStorage){
   user.role = 'user';*/
   return{
     getUser: function(){        
-		debugger;
+		
       return $localStorage.user;
     },
     generateRoleData: function(){

@@ -40,7 +40,7 @@ $scope.master = $scope.loginModel;
                     alert(res.data)    
                 } else {                    
                     $localStorage.token = res.access_token;
-                    debugger;  
+                      
                     loginService.userDetails(formData,function(result){
                         
                         $localStorage.user = result; 
