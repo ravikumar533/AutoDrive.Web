@@ -7,7 +7,7 @@
 }
 
 /* CSS for angular-dropdown-multiselect */
-.dropdown-multiselect dropdown-toggle
+.multiselect-parent dropdown-toggle
 {
     width: 150px;
 }

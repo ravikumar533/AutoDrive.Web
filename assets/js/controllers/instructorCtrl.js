@@ -53,8 +53,8 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
                 // Form Submition
                $scope.instructorModel.suburb = 
                {
-                   postalCode :$scope.SelectedSuburbs.PostCode,
-                   suburbName : $scope.SelectedSuburbs.Display
+                   postCode :$scope.SelectedSuburbs.PostCode,
+                   suburb : $scope.SelectedSuburbs.Display
                };
                $scope.instructorModel.areas = $scope.SelectedAreas;
                if(!$scope.instructorModel.id) { // Create 
@@ -115,8 +115,8 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
                 $scope.instructorModel = value;
                 $scope.SelectedAreas = value.areas;
                 $scope.SelectedSuburbs = {
-                    PostCode : value.suburb.postalCode,
-                    Display : value.suburb.suburbName
+                    PostCode : value.suburb.postCode,
+                    Display : value.suburb.display
                 }
             }
         });
@@ -142,8 +142,8 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
         });
     }
     function GetSuburbs(){ // Get Suburbs
-        suburbService.get().then(function(res){
-            $scope.Suburbs = res.data.slice(0,100);
+        suburbService.get("2067").then(function(res){
+            $scope.Suburbs = res.slice(0,100);
         });
     }
     // Reset Form
