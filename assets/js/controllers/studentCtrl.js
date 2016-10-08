@@ -48,7 +48,8 @@ app.controller('StudentCtrl', ["$scope","$state","ngTableParams", "studentServic
                 //your code for submit                
                 $scope.studentModel.instructor = {
                     instructorName : $scope.SelectedInstructor.firstName,
-                        id : $scope.SelectedInstructor.id
+                        id : $scope.SelectedInstructor.id,
+                        InstructorCode:$scope.SelectedInstructor.instructorCode
                     };
                 $scope.studentModel.suburbs = $scope.SelectedSuburb;
                 if(!$scope.studentModel.id) {
@@ -67,8 +68,8 @@ app.controller('StudentCtrl', ["$scope","$state","ngTableParams", "studentServic
                         form.$setPristine(true);
                     });
                 }
+                GetStudents();
             }
-
         },
         reset: function (form) {
             $scope.studentModel = angular.copy($scope.master);
@@ -95,8 +96,8 @@ app.controller('StudentCtrl', ["$scope","$state","ngTableParams", "studentServic
                 $scope.studentModel = value;
                 $scope.SelectedInstructor = value.instructor;
                 $scope.SelectedSuburb = {
-                    PostalCode : value.suburb.postalCode,
-                    SuburbName : value.suburb.suburbName
+                    PostCode : value.suburb.postCode,
+                    display : value.suburb.display
                 }
             }
         });
@@ -123,8 +124,8 @@ app.controller('StudentCtrl', ["$scope","$state","ngTableParams", "studentServic
     }
     
     function GetSuburbs(){ // Get Suburbs
-        suburbService.get().then(function(res){
-            $scope.Suburbs = res.data.slice(0,100);
+        suburbService.get("2067").then(function(res){            
+            $scope.Suburbs = res.data;
         });
     }
 }]);
