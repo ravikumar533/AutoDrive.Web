@@ -39,12 +39,16 @@ $scope.master = $scope.loginModel;
                 if (res.type == false) {                    
                     alert(res.data)    
                 } else {                    
-                    $localStorage.token = res.access_token;  
-                    $localStorage.user = {
-                        username : 'LoggedInUser',
-                        instructorId:'INS1001',
-                        role:'admin'
-                    }; 
+                    $localStorage.token = res.access_token;
+                    debugger;  
+                    loginService.userDetails(formData,function(result){
+                        
+                        $localStorage.user = result; 
+                        
+                    },function(error){
+
+                    });
+                    
                     $location.path('/app/dashboard');                   
                 }
             }, function(error) {                

@@ -25,6 +25,12 @@ app.factory("loginService",[
                     data: {username: data.username, password: data.password,grant_type:'password'}
                 }).success(success).error(error);
                 //$http.post(baseUrl + 'token', data).success(success).error(error)
+                },            
+            userDetails: function(data, success, error) {                
+                $http({
+                    method: 'GET',
+                    url: baseUrl + 'api/user/' + data.username
+                }).success(success).error(error);                
                 }
             };
     }    

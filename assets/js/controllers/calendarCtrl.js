@@ -39,7 +39,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
 	  
     ];
 
-    $scope.calendarView = 'month';
+    $scope.calendarView = 'week';
     $scope.calendarDate = new Date();
     
     function showModal(action, event) {
