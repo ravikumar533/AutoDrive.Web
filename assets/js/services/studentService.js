@@ -7,7 +7,7 @@ app.factory("studentService",[
     function ($http) {
         var uri = "http://AutoDrive/api/";
 
-        function get(studentId) {
+        function get() {
 
             return $http({
                 method: "GET",
