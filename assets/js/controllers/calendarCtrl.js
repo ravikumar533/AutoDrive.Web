@@ -2,11 +2,13 @@
 /**
  * Controller of the angularBootstrapCalendarApp
 */
-app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","calendarService","instructorService","studentService", function ($scope, $aside, moment, SweetAlert,calendarService,instructorService,studentService) {
+app.controller('CalendarCtrl', 
+["$scope", "$aside", "moment", "SweetAlert","calendarService","instructorService","studentService", "DropDownSettings",
+function ($scope, $aside, moment, SweetAlert,calendarService,instructorService,studentService,DropDownSettings) {
 
 
-    $scope.Students = [];
-    $scope.Instructors = [];
+    
+
     $scope.events = [];
 
     var vm = this;
@@ -15,12 +17,11 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
     var m = date.getMonth();
     var y = date.getFullYear();
     
-    GetStudents();
-    GetInstructors();
+   
     GetEvents();
   
 
-    $scope.calendarView = 'week';
+    $scope.calendarView = 'month';
     $scope.calendarDate = new Date();
     
     function showModal(action, event) {
@@ -38,6 +39,28 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
                 $scope.deleteEvent = function () {
                     $uibModalInstance.close($scope.event, $scope.event);
                 };
+                $scope.Students = [];
+                $scope.SelectedStudent =[];
+                $scope.studentDropListsettings= DropDownSettings.Student;
+                $scope.studentTranslationTexts= DropDownSettings.Student_Translation_text;
+                if(event.student.id){
+                    $scope.SelectedStudent = {
+                        id : event.student.id,
+                        firstName : event.student.studentName
+                    }
+                }
+               
+                $scope.Instructors = [];
+                $scope.SelectedInstructor =[];
+                $scope.instructorDropListsettings= DropDownSettings.Instructor;
+                $scope.instructorTranslationTexts= DropDownSettings.Instructor_Translation_text;
+                 if(event.instructor.id){
+                    $scope.SelectedInstructor = {
+                        id : event.instructor.id,
+                        firstName: event.instructor.instructorName
+                    }
+                }
+
                 $scope.maxDate = new Date(2020, 5, 22);
 				$scope.minDate = new Date(1970, 12, 31);
                 $scope.eventModel = event; 
@@ -62,17 +85,30 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
 
                         } else {
                             // Form Submition
-                        if(!$scope.eventModel.id) { // Create 
+                            var selectedDate = moment($scope.eventModel.selectedDate);
+                            var startDate = moment($scope.eventModel.startDateTime);
+                            var endDate = moment($scope.eventModel.endDateTime);
+                            $scope.eventModel.instructor = {
+                                instructorName : $scope.SelectedInstructor.firstName,
+                                id : $scope.SelectedInstructor.id
+                            };
+                            $scope.eventModel.student = {
+                                StudentName : $scope.SelectedStudent.firstName,
+                                id : $scope.SelectedStudent.id
+                            };
+                            $scope.eventModel.startDateTime = new Date(selectedDate.year(),selectedDate.month(),selectedDate.date(),startDate.hours(),startDate.minutes(),startDate.seconds());
+                            $scope.eventModel.endDateTime = new Date(selectedDate.year(),selectedDate.month(),selectedDate.date(),endDate.hours(),endDate.minutes(),endDate.seconds());
+                            if(!$scope.eventModel.id) { // Create 
                                 calendarService.post($scope.eventModel).success(function (e) {
                                     form.$setPristine(true);
-                                //ResetForm(true);
+                                GetEvents();
                                 });
                             }
                             else { // Update
                                 calendarService.put($scope.eventModel).success(function (e) {
                                     //noinspection JSUnresolvedFunction
                                     form.$setPristine(true);
-                                //ResetForm(true);
+                                GetEvents();
                                 });
                             }
                         }
@@ -111,13 +147,25 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
 					$scope.endOpened = false;
 					$scope.startOpened = !$scope.startOpened;
 				};
-
+                GetStudents();
+                GetInstructors();
+                function GetInstructors()
+                {
+                    instructorService.get().success(function(res){
+                        $scope.Instructors = res;
+                    });
+                };
+                function GetStudents()
+                {
+                    studentService.get().success(function(res){
+                        $scope.Students = res;
+                    });
+                };
+                
             }
         });
         modalInstance.result.then(function (selectedEvent, action) {
-
             $scope.eventDeleted(selectedEvent);
-
         });
     }
 
@@ -129,12 +177,15 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
         $scope.events.push({
             title: 'New Event',
             startsAt: new Date(y, m, d, 10, 0),
-            type: 'job'
+            type: 'job',
+            student:{},
+            instructor:{}
         });
         $scope.eventEdited($scope.events[$scope.events.length - 1]);
     };
 
     $scope.eventEdited = function (event) {
+
         showModal('Edited', event);
     };
 
@@ -145,7 +196,7 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
             text: "Your will not be able to recover this event!",
             type: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
+            firmButtonColor: "#DD6B55",
             confirmButtonText: "Yes, delete it!",
             cancelButtonText: "No, cancel plx!",
             closeOnConfirm: false,
@@ -193,23 +244,21 @@ app.controller('CalendarCtrl', ["$scope", "$aside", "moment", "SweetAlert","cale
 		$scope.endOpened = false;
 		$scope.startOpened = !$scope.startOpened;
 	};
+    function GetEvents(){
+        calendarService.get().success(function(res){
+            var events = [];
+            for(var i=0;i<res.length;i++){
+                var event = res[i];
+                event.startsAt = res[i].startDateTime;
+                event.endsAt = res[i].endDateTime;
+                var selectedDate = moment(res[i].startDateTime);
+            
+                event.selectedDate= new Date(selectedDate.year(),selectedDate.month(),selectedDate.date(),selectedDate.hours(),selectedDate.minutes(),selectedDate.seconds());
+                events.push(event);
+            }
+            $scope.events = events;
+        });
+    }
 
-    function GetInstructors()
-    {
-       instructorService.get().success(function(res){
-           $scope.Instructors = res;
-       });
-       
-    };
-    function GetStudents()
-    {
-      studentService.get().success(function(res){
-           $scope.Students = res;
-       });
-    };
-   function GetEvents(){
-       calendarService.get().success(function(res){
-           $scope.events = res;
-       });
-   }
+  
 }]);

@@ -77,7 +77,6 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
         },
         reset: function (form) {
             // Reset model
-            Console.log($scope.instructorModel);
             angular.element("#InstructorsList").find("tr.success").removeClass("success");
             $scope.instructorModel = null;
             $scope.instructorModel = angular.copy($scope.master); // Reset Form
@@ -143,7 +142,6 @@ app.controller('InstructorCtrl', ["$scope","$state","ngTableParams", "instructor
     }
     function GetSuburbs(){ // Get Suburbs
         suburbService.get("2067").then(function(res){
-            console.log(res);
             $scope.Suburbs = res.data;
         });
     }

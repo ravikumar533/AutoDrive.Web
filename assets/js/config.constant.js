@@ -58,7 +58,23 @@ app.constant('DropDownSettings', {
     },
     'Suburb_Translation_text': {
         buttonDefaultText:'Select Suburbs'
-    }
+    },
+    'Student':{
+        displayProp: 'firstName', 
+        idProp: 'id', 
+        externalIdProp: '',
+        enableSearch: true,
+        showCheckAll:false,
+        showUncheckAll:false,
+        selectionLimit: 1,  
+        smartButtonMaxItems: 1,      
+        smartButtonTextConverter: function(itemText, originalItem) {   
+             return itemText;
+        }     
+    },
+    'Student_Translation_text': {
+        buttonDefaultText:'Select Student'
+    },
 })
 app.constant('JS_REQUIRES', {
     //*** Scripts
