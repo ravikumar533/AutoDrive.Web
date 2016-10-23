@@ -34,11 +34,12 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     }).state('app.dashboard', {
         url: "/dashboard",
         templateUrl: "assets/views/dashboard.html",
+        publicAccess : false,
         resolve: loadSequence('d3', 'ui.knob', 'countTo', 'dashboardCtrl'),
         title: 'Dashboard',
         ncyBreadcrumb: {
             label: 'Dashboard'
-        }
+        }        
     })
     // Login routes
 	.state('login', {
@@ -46,9 +47,10 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
 	    template: '<div ui-view class="fade-in-right-big smooth"></div>',
 	    abstract: true
 	}).state('login.signin', {
-	    url: '/signin',
+	    url: '/signin',        
 	    templateUrl: "assets/views/login_login.html",
-        resolve: loadSequence('loginService', 'loginCtrl')
+        publicAccess : true,
+        resolve: loadSequence('loginService', 'loginCtrl')        
 	}).state('login.forgot', {
 	    url: '/forgot',
 	    templateUrl: "assets/views/login_forgot.html"

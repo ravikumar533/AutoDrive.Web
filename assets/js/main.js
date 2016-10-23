@@ -1,6 +1,6 @@
 var app = angular.module('app', ['Autogear']);
-app.run(['$rootScope', '$state', '$stateParams',
-function ($rootScope, $state, $stateParams) {
+app.run(['$rootScope', '$state', '$stateParams','$localStorage',
+function ($rootScope, $state, $stateParams,$localStorage) {
 
     // Attach Fastclick for eliminating the 300ms delay between a physical tap and the firing of a click event on mobile browsers
     FastClick.attach(document.body);
@@ -8,6 +8,15 @@ function ($rootScope, $state, $stateParams) {
     // Set some reference to access them from any scope
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    $rootScope.$on( '$stateChangeStart', function(event, next, current){
+       debugger;
+        var token = $localStorage.token;
+        if(!token && !next.publicAccess && current.url != '/signin')
+        {            
+            $state.go('login.signin');
+            event.preventDefault();       
+        }        
+    });
 
     // GLOBAL APP SCOPE
     // set below basic information
